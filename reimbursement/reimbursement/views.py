@@ -1,5 +1,13 @@
+# -*- coding: utf-8 -*- 
+
 from django.shortcuts import render, get_object_or_404, redirect
 import os
+import re
+import chardet
+# import sys
+# reload(sys)
+# sys.setdefaultencoding('utf8')
+
 #from django import forms
 #from django.forms import models as model_forms
 from .forms import InvoiceImageForm
@@ -34,6 +42,25 @@ def home(request):
             output = pytesseract.image_to_string(file,lang='chi_sim')
             context['output'] = output
             return render(request, 'home.html',context)
+
+    s="""
+            en: Regular expression is a powerful tool for manipulating text. 
+            zh: 汉语是世界上最优美的语言，正则表达式是一个很有用的工具
+            """
+
+    fencoding = chardet.detect(s)
+
+    #非ansi
+    re_words=re.compile(r"[\x80-\xff]+")
+    m =  re_words.search(s,0)            
+    context['output'] = m.string.decode(fencoding['encoding']).encode('utf-8')
+    
+    #unicode
+    s = unicode(s.decode(fencoding['encoding']))
+    re_words = re.compile(u"[\u4e00-\u9fa5]+")
+    m =  re_words.search(s,0)
+    res = re.findall(re_words, s)
+    context['output2'] = res[0].encode('utf-8')
 
     return render(request, 'home.html',context)
     
