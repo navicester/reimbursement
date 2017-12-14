@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block tpl_content %}
+    <div class="page">
+        <div class="page__hd">
+            <h1 class="page__title">普通发票</h1>
+            <p class="page__desc">手动输入发票信息</p>
+        </div>    
+        <div class="page__bd">
+            <div class="weui-cells__title">总金额</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">总金额</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="0"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
+            {{form}}
+            <input type="submit" class="weui-btn weui-btn_primary"value="提交"/>
+        </form>
+    </div>
+{% endblock %}

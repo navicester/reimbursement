@@ -4,6 +4,20 @@ from django.shortcuts import render, get_object_or_404, redirect
 import os
 import re
 import chardet
+
+from django.core.urlresolvers import reverse
+from django.views.generic.base import View, TemplateResponseMixin, ContextMixin, TemplateView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import FormMixin, ModelFormMixin
+from django.http import HttpResponseRedirect
+from django.conf import settings
+from django.utils.translation import ugettext as _
+from django.http import HttpResponse, Http404
+from django.forms.models import modelformset_factory
+from django.forms import models as model_forms
+
 # import sys
 # reload(sys)
 # sys.setdefaultencoding('utf8')
@@ -11,7 +25,7 @@ import chardet
 #from django import forms
 #from django.forms import models as model_forms
 from .forms import InvoiceImageForm
-from .models import InvoiceImage
+from .models import InvoiceImage, Invoice
 try:
     import Image
 except ImportError:
@@ -73,3 +87,27 @@ def home(request):
                 # utf8_text = api.GetUTF8Text()
 
         # return JsonResponse({'utf8_text': utf8_text})    
+
+class InvoiceCreateView(CreateView):
+    #form_class = OfficeInspectionForm
+    # fields = ['total_amount',]
+    form_class = model_forms.modelform_factory(Invoice, exclude=["",], )
+    template_name = "invoices/invoice_create.html"
+
+    def form_valid(self, form, *args, **kwargs):
+        form = super(InvoiceCreateView, self).form_valid(form, *args, **kwargs)
+        return form
+
+    def get_success_url(self, *args, **kwargs):
+        return reverse("voice_list", kwargs={}) 
+
+class InvoiceListView(ListView): 
+    model = Invoice
+    template_name = "invoices/invoice_list.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvoiceListView, self).get_context_data(*args, **kwargs)
+        context["objects"] = self.model.objects.all()
+        
+        return context
+

@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from reimbursement.views import home
+from reimbursement.views import home, InvoiceCreateView, InvoiceListView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^home', home, name="home"),
+    url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
+    url(r'^invoices/create$', InvoiceCreateView.as_view(), name='invoice_create'),
 ]
