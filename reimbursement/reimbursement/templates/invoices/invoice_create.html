@@ -19,7 +19,7 @@
                     <div class="weui-cell__hd"><label class="weui-label">总金额</label></div>
                     {% if form.total_amount.errors %}<div class="error" style="color:#b75f33">{{ form.total_amount.errors }}</div>{% endif %}
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" name="total_amount" id="id_total_amount" required pattern="[0-9.]*" step='0.01' placeholder="0.00"/>
+                        <input class="weui-input" type="number" name="total_amount" id="id_total_amount" required pattern="[0-9.]*" step='0.01' value="{{form.total_amount.value}}" placeholder="0.00"/>
                     </div>
                 </div>
 
@@ -38,7 +38,6 @@
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">本位币</label></div>
-                    {% if form.base_amount.errors %}<div class="error" style="color:#b75f33">{{ form.base_amount.errors }}</div>{% endif %}
                     <div class="weui-cell__bd {% if form.base_amount.errors %} error has-error{% endif %}">
                         <input id="id_base_amount" name="base_amount" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="0.00"/>
                     </div>
