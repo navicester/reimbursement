@@ -21,7 +21,7 @@ class Invoice(models.Model):
 	comments = models.CharField(_('invoice comments'), max_length=30, blank=False, null=False)
 
 	def __unicode__(self): 
-		return self.id
+		return "{0}".format(self.id)
 
 	def get_absolute_url(self):
 		return reverse("invoice_detail", kwargs={"pk": self.pk })

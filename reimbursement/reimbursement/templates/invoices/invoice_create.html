@@ -2,26 +2,137 @@
 {% load crispy_forms_tags %}
 
 {% block tpl_content %}
-    <div class="page">
+<div class="page">
+    <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
+        {% if form.errors %}
+            <p style="color: #b75f33;">
+                {{form.non_field_errors}}
+            </p>
+        {% endif %}    
         <div class="page__hd">
             <h1 class="page__title">普通发票</h1>
             <p class="page__desc">手动输入发票信息</p>
         </div>    
         <div class="page__bd">
-            <div class="weui-cells__title">总金额</div>
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">总金额</label></div>
+                    {% if form.total_amount.errors %}<div class="error" style="color:#b75f33">{{ form.total_amount.errors }}</div>{% endif %}
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="0"/>
+                        <input class="weui-input" type="number" name="total_amount" id="id_total_amount" required pattern="[0-9.]*" step='0.01' placeholder="0.00"/>
+                    </div>
+                </div>
+
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label for="id_currency" class="weui-label">货币</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <select class="weui-select" name="currency" id="id_currency">
+                            <option value="1">人民币</option>
+                            <option value="2">美元</option>
+                            <option value="3">欧元</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">本位币</label></div>
+                    {% if form.base_amount.errors %}<div class="error" style="color:#b75f33">{{ form.base_amount.errors }}</div>{% endif %}
+                    <div class="weui-cell__bd {% if form.base_amount.errors %} error has-error{% endif %}">
+                        <input id="id_base_amount" name="base_amount" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="0.00"/>
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">增值税(选填)</label></div>
+                    <div class="weui-cell__bd">
+                        <input id="id_VAT_amount" name="VAT_amount" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="请输入增值税税额"/>
                     </div>
                 </div>
             </div>
+
+            <div class="weui-cells__title">票据类型</div>
+            <div class="weui-cells weui-cells_radio">
+                <label class="weui-cell weui-check__label" for="x11">
+                    <div class="weui-cell__bd">
+                        <p>普票</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="invoice_type" id="x11"/>
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x12">
+
+                    <div class="weui-cell__bd">
+                        <p>专票</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" name="invoice_type" class="weui-check" id="x12" checked="checked"/>
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+                <label class="weui-cell weui-check__label" for="x13">
+                    <div class="weui-cell__bd">
+                        <p>非发票</p>
+                    </div>
+                    <div class="weui-cell__ft">
+                        <input type="radio" class="weui-check" name="invoice_type" id="x13"/>
+                        <span class="weui-icon-checked"></span>
+                    </div>
+                </label>
+            </div>
+
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label for="id_invoice_date" class="weui-label">日期</label></div>
+                <div class="weui-cell__bd">
+                    <input id="id_invoice_date" name="invoice_date" class="weui-input" type="date" value=""/>
+                </div>
+            </div>
+
+            <div class="weui-cells">
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label for="id_invoice_project" class="weui-label">项目</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <select id="id_invoice_project" name="invoice_project" class="weui-select" name="select2">
+                            <option value="1">餐费</option>
+                            <option value="2">房租</option>
+                            <option value="3">差旅费</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells">
+                <div class="weui-cell weui-cell_select weui-cell_select-after">
+                    <div class="weui-cell__hd">
+                        <label for="id_invoice_category" class="weui-label">项目</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <select id="id_invoice_category" name="invoice_category" class="weui-select" name="select2">
+                            <option value="1">企业日程运营</option>
+                            <option value="2">市场推广</option>
+                            <option value="3">技术研发</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells__title">备注</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea id="id_comments" name="comments" class="weui-textarea" placeholder="请输入票据备注" rows="3"></textarea>
+                        <div class="weui-textarea-counter"><span>0</span>/200</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
-            {{form}}
-            <input type="submit" class="weui-btn weui-btn_primary"value="提交"/>
-        </form>
-    </div>
+        <input type="submit" class="weui-btn weui-btn_primary"value="提交"/>
+    </form>
+</div>
 {% endblock %}

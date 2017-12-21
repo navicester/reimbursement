@@ -95,11 +95,27 @@ class InvoiceCreateView(CreateView):
     template_name = "invoices/invoice_create.html"
 
     def form_valid(self, form, *args, **kwargs):
-        form = super(InvoiceCreateView, self).form_valid(form, *args, **kwargs)
-        return form
+        obj = form.save(commit = False)
+        obj.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def post(self, request, *args, **kwargs):        
+
+        form = self.form_class(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            # obj = form.save(commit = False)
+            # obj.save()
+            # return reverse("home", kwargs={})
+            # return HttpResponseRedirect(self.get_success_url())
+            return self.form_valid(args, kwargs)
+        else:
+            print form.errors
+        #     return self.form_invalid(form)
+
+        return super(InvoiceCreateView, self).post(request, *args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
-        return reverse("voice_list", kwargs={}) 
+        return reverse("invoice_list", kwargs={}) 
 
 class InvoiceListView(ListView): 
     model = Invoice

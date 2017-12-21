@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 
 
@@ -15,8 +16,13 @@
     <style type="text/css">
     {% block style %}
     .page .weui-tab{        
-        position: inherit; /* set this css, otherwise tabbar will not be at bottom; not required for example, to check reason late*/
+        /*position: inherit;*/ /* set this css, otherwise tabbar will not be at bottom; not required for example, to check reason late*/
     }
+
+    .error{
+        color:red!important;
+    }
+
     </style>
     {% endblock%}
 </head>
@@ -29,10 +35,10 @@
                 <div class="weui-tab">
                     <div class="weui-navbar">
                         <div class="weui-navbar__item weui-bar__item_on">
-                            普通录入
+                            <a style="display:block;" href="{% url 'invoice_create' %}">普通录入</a>
                         </div>
                         <div class="weui-navbar__item">
-                            扫描录入
+                            <a style="display:block;" href="{% url 'home' %}">扫描录入</a>
                         </div>
                         <div class="weui-navbar__item">
                             付款申请
