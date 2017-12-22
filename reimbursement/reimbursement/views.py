@@ -24,7 +24,7 @@ from django.forms import models as model_forms
 
 #from django import forms
 #from django.forms import models as model_forms
-from .forms import InvoiceImageForm
+from .forms import InvoiceImageForm, InvoiceForm
 from .models import InvoiceImage, Invoice
 try:
     import Image
@@ -90,12 +90,11 @@ def home(request):
 
 class InvoiceCreateView(CreateView):
     #form_class = OfficeInspectionForm
-    # fields = ['total_amount',]
-    form_class = model_forms.modelform_factory(Invoice, exclude=["",], )
+    form_class = InvoiceForm #model_forms.modelform_factory(Invoice, exclude=["",], )
     template_name = "invoices/invoice_create.html"
 
     def form_valid(self, form, *args, **kwargs):
-        obj = form.save(commit = False)
+        obj = form.save(commit=False)
         obj.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -103,11 +102,7 @@ class InvoiceCreateView(CreateView):
 
         form = self.form_class(request.POST or None, request.FILES or None)
         if form.is_valid():
-            # obj = form.save(commit = False)
-            # obj.save()
-            # return reverse("home", kwargs={})
-            # return HttpResponseRedirect(self.get_success_url())
-            return self.form_valid(args, kwargs)
+            return self.form_valid(form, args, kwargs)
         else:
             print form.errors
         #     return self.form_invalid(form)

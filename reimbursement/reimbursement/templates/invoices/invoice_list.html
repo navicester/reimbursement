@@ -2,5 +2,26 @@
 {% load crispy_forms_tags %}
 
 {% block tpl_content %}
-{{objects}}
+<div class="page">
+    <div class="page__hd">
+        <h1 class="page__title">发票</h1>
+        <p class="page__desc">未提交的费用</p>
+    </div>
+    <div class="page__bd">
+        <div class="weui-cells__title">选择要提交费用</div>
+        <div class="weui-cells weui-cells_checkbox">
+        	{% for object in objects %}
+            <label class="weui-cell weui-check__label" for="{{object.pk}}">
+                <div class="weui-cell__hd">
+                    <input type="checkbox" class="weui-check" name="checkbox1" id="{{object.pk}}" checked="checked"/>
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>{{object}}</p>
+                </div>
+            </label>
+            {% endfor %}
+        </div>    
+    </div>
+</div>
 {% endblock %}

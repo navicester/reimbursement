@@ -17,9 +17,9 @@
             <div class="weui-cells weui-cells_form">
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">总金额</label></div>
-                    {% if form.total_amount.errors %}<div class="error" style="color:#b75f33">{{ form.total_amount.errors }}</div>{% endif %}
                     <div class="weui-cell__bd">
-                        <input class="weui-input" type="number" name="total_amount" id="id_total_amount" required pattern="[0-9.]*" step='0.01' value="{{form.total_amount.value}}" placeholder="0.00"/>
+<!--                         <input class="weui-input" type="number" name="total_amount" id="id_total_amount" required pattern="[0-9.]*" step='0.01' value="{{form.total_amount.value}}" placeholder="0.00"/> -->
+                        {{form.total_amount}}
                     </div>
                 </div>
 
@@ -39,14 +39,16 @@
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">本位币</label></div>
                     <div class="weui-cell__bd {% if form.base_amount.errors %} error has-error{% endif %}">
-                        <input id="id_base_amount" name="base_amount" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="0.00"/>
+<!--                         <input id="id_base_amount" name="base_amount"  value="{{form.base_amount.value}}" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="0.00"/> -->
+                        {{form.base_amount}}
                     </div>
                 </div>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">增值税(选填)</label></div>
                     <div class="weui-cell__bd">
-                        <input id="id_VAT_amount" name="VAT_amount" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="请输入增值税税额"/>
+                        <!-- <input id="id_VAT_amount" name="VAT_amount" class="weui-input" type="number" pattern="[0-9.]*" step='0.01' placeholder="请输入增值税税额"/> -->
+                        {{form.VAT_amount}}
                     </div>
                 </div>
             </div>
@@ -85,8 +87,8 @@
 
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label for="id_invoice_date" class="weui-label">日期</label></div>
-                <div class="weui-cell__bd">
-                    <input id="id_invoice_date" name="invoice_date" class="weui-input" type="date" value=""/>
+                <div class="weui-cell__bd {% if form.invoice_date.errors %} error has-error{% endif %}">
+                    <input id="id_invoice_date" name="invoice_date" class="weui-input" type="date" value="{% if form.invoice_date.value %}{{form.invoice_date.value}}{% endif %}"/>
                 </div>
             </div>
 
