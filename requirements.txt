@@ -4,3 +4,5 @@ django-crispy-forms==1.6.0
 olefile==0.44
 Pillow==4.3.0
 pytesseract==0.1.7
+gunicorn==19.4.5
+dj-database-url==0.3.0

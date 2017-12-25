@@ -1,0 +1,1 @@
+web: gunicorn reimbusrement.wsgi --log-file -
