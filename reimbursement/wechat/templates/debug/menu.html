@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html lang="zh-cn">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title>微信调试器 微信开发调试工具</title>
+
+		<script type="text/javascript" src={% static "js/require.js" %}></script>
+		<script type="text/javascript" src={% static "js/jquery.min.js" %}></script>
+		<link type="text/css" href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" />
+		<!-- <link type="text/css" href="{% static "css/common.css" %}" rel="stylesheet" />
+		<link type="text/css" href="{% static "css/emulator.css.css" %}" rel="stylesheet" /> -->
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="clearfix">
+				<div class="col-sm-8">
+					<form action="" method="get" class="form-horizontal form" {% csrf_token %}>
+						<div class="page-header">
+							<h4>微信公众平台开发菜单调试</h4>
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label"></label>
+								<div class="col-sm-10">
+									<input name="submit" type="button" onclick="getToken()" value="获取token" class="btn btn-primary">
+									<input name="submit" type="button" onclick="deleteMenu()" value="删除菜单" class="btn btn-primary">
+									<input name="submit" type="button" onclick="addMenu()" value="添加菜单" class="btn btn-primary">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label">appid</label>
+								<div class="col-sm-10">
+									<input type="text" id="appid" value="wxe90ebbe29377e650" placeholder="wxe90ebbe29377e650" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label">appsecret</label>
+								<div class="col-sm-10">
+									<input type="text" id="appsecret" value="d4624c36b6795d1d99dcf0547af5443d" placeholder="d4624c36b6795d1d99dcf0547af5443d" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label">Token</label>
+								<div class="col-sm-10">
+									<input type="text" id="access_token" value="" placeholder="Access Token" class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label">菜单内容</label>
+								<div class="col-sm-10">
+									<input type="text" id="menu-json" value="" placeholder="" class="form-control" />
+								</div>
+							</div>							
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label">发送消息</label>
+								<div class="col-sm-10">
+									<textarea id="sendxml" name="send-content" rows="8" cols="50" class="form-control" readonly="readonly"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-12 col-sm-2 col-md-2 control-label">接收消息</label>
+								<div class="col-sm-10">
+								    <pre id="receive"></pre>
+									<script type="text/javascript">
+										$(document).ready(function($) {	
+											//$('#receive').text('加载中。。。');
+										});	
+									</script>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			function json2str(o) {
+			    var arr = [];
+			    var fmt = function(s) {
+			        if (typeof s == 'object' && s != null) return json2str(s);
+			        return /^(string|number)$/.test(typeof s) ? "'" + s + "'" : s;
+			    }
+			    for (var i in o) arr.push("'" + i + "':" + fmt(o[i]));
+			        return '{' + arr.join(',') + '}';
+			}		
+					
+			function getToken() {
+				var appid = $('#appid').val();
+				var appsecret = $('#appsecret').val();
+				var get_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appid + "&secret=" + appsecret;
+				console.log(get_token_url);
+				$.ajax('',{
+					type: "POST",
+					dataType: "json",
+					data : {
+						appid: appid,
+						appsecret: appsecret,
+						purpose:'get_token'
+					},					
+					beforeSend : function(){
+						if ($('#appid').val() == "" || $('#appsecret').val() == ""){
+							alert("appid或appsecret未填写");
+							return;
+						}
+						$('#receive').text('加载中。。。');
+					},
+					success: function(s) {
+						console.log("success");
+						$('#access_token').val(s.access_token);
+						$('#receive').text("access_token:"+s.access_token);
+						//$('#receive').text(json2str(s);
+					},
+					error: function() {
+						alert("接口无响应或超时！");
+					},
+					timeout:10000
+				})
+			}
+
+			function deleteMenu() {
+				var token = $('#access_token').val();
+				console.log(appsecret);
+				$.ajax('',{
+					type: "POST",
+					dataType: "json",
+					data : {
+						access_token: token,
+						purpose:'delete_menu'
+					},
+					beforeSend : function(){
+						if ($('#token').val() == ""){
+							alert("token未填写");
+							return;
+						}
+						$('#receive').text('加载中。。。');
+					},
+					success: function(s) {
+						console.log("success");
+						$('#receive').text(json2str(s));
+					},
+					error: function() {
+						alert("接口无响应或超时！");
+					},
+					timeout:10000
+				})
+			}	
+
+			function addMenu() {
+				var token = $('#access_token').val();	
+				var menu_json = $('#menu-json').val();	
+				console.log(menu_json);
+				$.ajax('',{
+					type: "POST",
+					dataType: "json",
+					data : {
+						access_token: token,
+						menu_json: menu_json,
+						purpose:'add_menu'
+					},
+					beforeSend : function(){
+						if ($('#token').val() == ""){
+							alert("token未填写");
+							return;
+						}
+						$('#receive').text('加载中。。。');
+					},
+					success: function(s) {
+						console.log("success");
+						$('#receive').text(json2str(s));
+					},
+					error: function() {
+						alert("接口无响应或超时！");
+					},
+					timeout:10000
+				})
+			}	
+
+			function getxml(xml){
+				var xmlobject = null;
+				try{
+					if(window.ActiveXObject){
+						xmlobject =new ActiveXObject("Microsoft.XMLDOM");
+						xmlobject.async="false";
+						xmlobject.loadXML(xml);
+					}else{// 用于 Mozilla, Firefox, Opera, 等浏览器的代码：
+					   var parser=new DOMParser();
+					   xmlobject =parser.parseFromString(xml,"text/xml");
+					}
+				}catch(e){alert("您的浏览器不支持模拟测试");}
+				return xmlobject;
+			}	
+
+					
+		</script>
+	</body>
+</html>

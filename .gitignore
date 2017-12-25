@@ -4,5 +4,98 @@ jTessBoxEditor*
 VietOCR.NET-4.3_64.zip
 env-reimbursement/
 tools_trainings/
+
+# backup files
+_backup/
+
+# Security iles
+security_setting.py
+#settings_security.py
+
+#static/static_root
+#static_in_env/media_root
+trial.py
+
+# temporaty files
+~$*
+*.tmp
+
+# project file
+.pydevproject
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+.idea/
+
+# tools and environment
+bin/
+include/
+lib/
+pip-selfcheck.json
+
+
+dev_server.py
+
+#*.sqlite3
+.DS_STORE
+
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+#*.py[cod]
+*.py[co]
+
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+#*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
  
  

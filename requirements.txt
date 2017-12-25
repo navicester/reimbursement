@@ -1,0 +1,6 @@
+chardet==3.0.4
+Django==1.9
+django-crispy-forms==1.6.0
+olefile==0.44
+Pillow==4.3.0
+pytesseract==0.1.7
