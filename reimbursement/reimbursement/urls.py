@@ -14,10 +14,14 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
+
+from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from reimbursement.views import home, InvoiceCreateView, InvoiceListView
 urlpatterns = [
+    url(r'^wechat/', include('wechat.urls')),
+
     url(r'^admin/', admin.site.urls),
     url(r'^home', home, name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),

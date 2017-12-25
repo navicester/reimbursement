@@ -58,7 +58,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, "templates"), 
-            os.path.join(BASE_DIR, "reimbursement", "templates", "invoices")],
+            os.path.join(BASE_DIR, "reimbursement", "templates", "invoices"),
+			os.path.join(BASE_DIR, "wechat", "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,3 +132,10 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, "static_in_env", "static_root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_in_env", "media_root")
 
+# Wechat
+if not 'SERVER_SOFTWARE' in os.environ:
+    APP_ID = 'wxe90ebbe29377e650' #changyubingfeng
+    APP_SECRET = 'd4624c36b6795d1d99dcf0547af5443d'    
+else:
+    APP_ID = 'wx168434ba37e8c17b' #
+    APP_SECRET = 'd4624c36b6795d1d99dcf0547af5443d'
