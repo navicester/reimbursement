@@ -1,1 +1,1 @@
-web: gunicorn reimbusrement.wsgi --log-file -
+web: gunicorn reimbursement.wsgi --log-file -
