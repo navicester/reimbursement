@@ -59,6 +59,30 @@ def handleMenuRequest(request):
                     }]
                 }]
             }
+
+            # reimbursement
+            {
+                "button":[
+                {    
+                    "type":"view",
+                    "name":"创建发票",
+                    "url":"http://zakkabag.applinzi.com/invoices/create"
+                },
+                {
+                    "name":"我的发票",
+                    "sub_button":[
+                    {    
+                        "type":"view",
+                        "name":"发票内容",
+                        "url":"http://zakkabag.applinzi.com/invoices"
+                    },
+                    {
+                        "type":"view",
+                        "name":"我的报销",
+                        "url":"http://zakkabag.applinzi.com/invoices"
+                    }]
+                }]
+            }            
              '''
 
             access_token = smart_str(request.POST.get("access_token", None))
