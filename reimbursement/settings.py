@@ -128,7 +128,7 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_in_pro", "our_static"),
     os.path.join(BASE_DIR, "static_in_pro", "weui"),
-    os.path.join(BASE_DIR, "static_in_pro", "wechat"),
+    os.path.join(BASE_DIR, "wechat", "static"),
 )
 STATIC_ROOT = os.path.join(BASE_DIR, "static_in_env", "static_root")
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_in_env", "media_root")
