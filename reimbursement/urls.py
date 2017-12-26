@@ -27,3 +27,8 @@ urlpatterns = [
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
     url(r'^invoices/create$', InvoiceCreateView.as_view(), name='invoice_create'),
 ]
+
+import os
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
