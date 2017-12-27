@@ -127,7 +127,7 @@ class InvoiceListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(InvoiceListView, self).get_context_data(*args, **kwargs)
         context["objects"] = self.model.objects.all()
-        formset = InvoiceModelFormset(queryset=self.model.objects.all(),
+        formset = InvoiceModelFormset(queryset=self.model.objects.filter(invoice_status='notsubmitted'),
             # initial=[{'use_condition': _('Normal'),}]
             )
         context["formset"] = formset
@@ -137,13 +137,14 @@ class InvoiceListView(ListView):
     def post(self, request, *args, **kwargs):
 
         formset = InvoiceModelFormset(request.POST or None, request.FILES or None)
-        print request.POST
+        # print request.POST
         if formset.is_valid():
             obj = ReimbusementRequest(status="inprogress",total_amount=0)
             obj.save()
             instances = formset.save(commit=False)
             for instance in instances:
                 instance.reimbursement_request = obj
+                instance.invoice_status = 'inprogress'
                 instance.save()
                 obj.total_amount = obj.total_amount + instance.total_amount
                 obj.save()

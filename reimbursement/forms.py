@@ -4,7 +4,7 @@ from django import forms
 from .models import InvoiceImage, Invoice
 from django.forms.models import modelformset_factory, BaseModelFormSet
 from django.utils.translation import ugettext_lazy as _
-
+from django.forms.widgets import RadioChoiceInput
 class InvoiceImageForm(forms.ModelForm):
     class Meta:
         model = InvoiceImage
@@ -14,10 +14,18 @@ class InvoiceForm(forms.ModelForm):
 
     currency = forms.ChoiceField(
             label=_('currency'),
-            choices=Invoice.invoice_currency,
+            choices=Invoice.invoice_currency_option,
             # empty_label = None, #not show enmpty
             required=True
             )      
+
+    invoice_type = forms.ChoiceField(
+            label=_('invoice type'),
+            choices=Invoice.invoice_type_option,
+            # empty_label = None, #not show enmpty
+            widget = forms.RadioSelect,
+            required=True
+            )    
 
     def __init__(self, *args, **kwargs):
         super(InvoiceForm, self).__init__(*args, **kwargs)

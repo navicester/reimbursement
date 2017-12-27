@@ -56,35 +56,37 @@
 
             <div class="weui-cells__title">票据类型</div>
             <div class="weui-cells weui-cells_radio">
-                <label class="weui-cell weui-check__label" for="x11">
+                <label class="weui-cell weui-check__label" for="id_invoice_type_0">
                     <div class="weui-cell__bd">
                         <p>普票</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <input type="radio" class="weui-check" name="invoice_type" id="x11"/>
+                        <input type="radio" class="weui-check" name="invoice_type" id="id_invoice_type_0" value="ordinary"/>
                         <span class="weui-icon-checked"></span>
                     </div>
                 </label>
-                <label class="weui-cell weui-check__label" for="x12">
+                <label class="weui-cell weui-check__label" for="id_invoice_type_1">
 
                     <div class="weui-cell__bd">
                         <p>专票</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <input type="radio" name="invoice_type" class="weui-check" id="x12" checked="checked"/>
+                        <input type="radio" name="invoice_type" class="weui-check" id="id_invoice_type_1" value="special" checked="checked"/>
                         <span class="weui-icon-checked"></span>
                     </div>
                 </label>
-                <label class="weui-cell weui-check__label" for="x13">
+                <label class="weui-cell weui-check__label" for="id_invoice_type_2">
                     <div class="weui-cell__bd">
                         <p>非发票</p>
                     </div>
                     <div class="weui-cell__ft">
-                        <input type="radio" class="weui-check" name="invoice_type" id="x13"/>
+                        <input type="radio" class="weui-check" name="invoice_type" id="id_invoice_type_2" value="notinvoice"/>
                         <span class="weui-icon-checked"></span>
                     </div>
                 </label>
             </div>
+
+            {{form.invoice_type0}}
 
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label for="id_invoice_date" class="weui-label">日期</label></div>
@@ -99,7 +101,7 @@
                         <label for="id_invoice_project" class="weui-label">项目</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <select id="id_invoice_project" name="invoice_project" class="weui-select" name="select2">
+                        <select id="id_invoice_project" name="invoice_project" class="weui-select">
                             <option value="1">餐费</option>
                             <option value="2">房租</option>
                             <option value="3">差旅费</option>
@@ -114,7 +116,7 @@
                         <label for="id_invoice_category" class="weui-label">项目</label>
                     </div>
                     <div class="weui-cell__bd">
-                        <select id="id_invoice_category" name="invoice_category" class="weui-select" name="select2">
+                        <select id="id_invoice_category" name="invoice_category" class="weui-select">
                             <option value="1">企业日程运营</option>
                             <option value="2">市场推广</option>
                             <option value="3">技术研发</option>
