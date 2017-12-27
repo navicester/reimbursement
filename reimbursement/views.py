@@ -28,7 +28,12 @@ from .forms import (
     InvoiceModelFormset
     )
 
-from .models import InvoiceImage, Invoice
+from .models import (
+    InvoiceImage, 
+    Invoice,
+    ReimbusementRequest,
+    )
+
 try:
     import Image
 except ImportError:

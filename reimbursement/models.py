@@ -11,9 +11,15 @@ class InvoiceImage(models.Model):
         return self.id
 
 def total_amount_saved(sender, instance, *args, **kwargs):
-    instance.total_amount = instance.base_amount + instance.VAT_amount
+    instance.total_amount = instance.base_amount or 0 + instance.VAT_amount or 0
 
 class Invoice(models.Model):
+    invoice_currency = [
+        ('RMB', _('RMB')),
+        ('USD', _('USD')),
+        ('EUR', _('EUR')),
+    ]
+
     invoice_category_option = [
         ('1', _('Operation')),
         ('2', _('Market')),
@@ -33,7 +39,7 @@ class Invoice(models.Model):
     ] 
 
     total_amount = models.DecimalField(_('total amount'), decimal_places=2, max_digits=20, blank=False, null=False)
-    currency = models.CharField(_('currency'), max_length=30,blank=False, null=False)
+    currency = models.CharField(_('currency'), choices=invoice_currency,max_length=30,blank=False, null=False)
     base_amount = models.DecimalField(_('base amount'), decimal_places=2, max_digits=20, blank=False, null=False)
     VAT_amount = models.DecimalField(_('VAT amount'), decimal_places=2, max_digits=20, blank=True, null=True)
     invoice_type = models.CharField(_('invoice type'), max_length=30, blank=False, null=False)

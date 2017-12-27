@@ -12,16 +12,18 @@
             <div class="weui-cells__title">选择要提交费用</div>
             <div class="weui-cells weui-cells_checkbox">
                 {{ formset.management_form }}
+                {{formset0}}
                 {% for form in formset %}
-                <label class="weui-cell weui-check__label" for="form-{{forloop.counter0}}-id">
+                <label class="weui-cell weui-check__label" for="id_form-{{forloop.counter0}}-{{form.is_submit.name}}">
                     <div class="weui-cell__hd">
-                        <input type="checkbox" class="weui-check" name="checkbox1" id="form-{{forloop.counter0}}-id" checked="checked"/>
+                        <input type="checkbox" class="weui-check" name="form-{{forloop.counter0}}-{{form.is_submit.name}}" id="id_form-{{forloop.counter0}}-{{form.is_submit.name}}" checked="checked"/>
                         <i class="weui-icon-checked"></i>
                     </div>
                     <div class="weui-cell__bd">
                         <p>{{form.instance}}</p>
                     </div>
                 </label>
+                <input id="id_form-{{forloop.counter0}}-id" name="form-{{forloop.counter0}}-id" type="hidden" value="{{forloop.counter}}" />
                 {% endfor %}
             </div>
             <input type="submit" class="weui-btn weui-btn_primary"value="提交审批"/>
