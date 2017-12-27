@@ -78,3 +78,6 @@ class ReimbusementRequest(models.Model):
     class Meta:
         verbose_name = _("reimbusement request")
         verbose_name_plural = _("reimbusement request")
+
+    def __unicode__(self): 
+        return "IV{0:0>5d}-{1}".format(self.id, self.status)
