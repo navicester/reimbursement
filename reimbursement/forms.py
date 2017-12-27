@@ -2,6 +2,7 @@
 
 from django import forms
 from .models import InvoiceImage, Invoice
+from django.forms.models import modelformset_factory
 
 class InvoiceImageForm(forms.ModelForm):
     class Meta:
@@ -36,5 +37,8 @@ class InvoiceForm(forms.ModelForm):
 
     class Meta:
       model = Invoice
-      exclude = ['']    
+      exclude = ['invoice_status']    
 
+InvoiceModelFormset = modelformset_factory(Invoice,
+                                            form=InvoiceForm,
+                                            extra=0)

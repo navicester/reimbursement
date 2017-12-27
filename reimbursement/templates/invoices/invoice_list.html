@@ -11,14 +11,15 @@
         <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
             <div class="weui-cells__title">选择要提交费用</div>
             <div class="weui-cells weui-cells_checkbox">
-                {% for object in objects %}
-                <label class="weui-cell weui-check__label" for="{{object.pk}}">
+                {{ formset.management_form }}
+                {% for form in formset %}
+                <label class="weui-cell weui-check__label" for="form-{{forloop.counter0}}-id">
                     <div class="weui-cell__hd">
-                        <input type="checkbox" class="weui-check" name="checkbox1" id="{{object.pk}}" checked="checked"/>
+                        <input type="checkbox" class="weui-check" name="checkbox1" id="form-{{forloop.counter0}}-id" checked="checked"/>
                         <i class="weui-icon-checked"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>{{object}}</p>
+                        <p>{{form.instance}}</p>
                     </div>
                 </label>
                 {% endfor %}

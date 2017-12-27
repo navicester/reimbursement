@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*- 
 
-from django.shortcuts import render, get_object_or_404, redirect
 import os
 import re
 import chardet
 
-from django.core.urlresolvers import reverse
 from django.views.generic.base import View, TemplateResponseMixin, ContextMixin, TemplateView
-from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView, FormMixin, ModelFormMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import FormMixin, ModelFormMixin
-from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.conf import settings
 from django.utils.translation import ugettext as _
-from django.http import HttpResponse, Http404
 from django.forms.models import modelformset_factory
 from django.forms import models as model_forms
 
@@ -24,15 +22,20 @@ from django.forms import models as model_forms
 
 #from django import forms
 #from django.forms import models as model_forms
-from .forms import InvoiceImageForm, InvoiceForm
+from .forms import (
+    InvoiceImageForm, 
+    InvoiceForm,
+    InvoiceModelFormset
+    )
+
 from .models import InvoiceImage, Invoice
 try:
     import Image
 except ImportError:
     from PIL import Image
+
 import pytesseract
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract'
-from django.conf import settings
 
 def decodeTrainInvoice():
     path = os.path.join(settings.MEDIA_ROOT,"20170730090411.png")
@@ -119,6 +122,30 @@ class InvoiceListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(InvoiceListView, self).get_context_data(*args, **kwargs)
         context["objects"] = self.model.objects.all()
-        
+        formset = InvoiceModelFormset(queryset=self.model.objects.all(),
+            # initial=[{'use_condition': _('Normal'),}]
+            )
+        context["formset"] = formset
+
         return context
 
+    def post(self, request, *args, **kwargs):
+
+        formset = InvoiceModelFormset(request.POST or None, request.FILES or None)
+        print request.POST
+        if formset.is_valid():
+            obj = ReimbusementRequest(status="inprogress",total_amount=0)
+            obj.save()
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.reimbursement_request = obj
+                instance.save()
+                obj.total_amount = obj.total_amount + instance.total_amount
+                obj.save()
+            # messages.success(request, "Your list has been updated.")
+            return redirect(reverse("invoice_list",  kwargs={}))
+
+        self.object_list = self.get_queryset() # copy from BaseListView::get
+        context = self.get_context_data()
+        context['formset'] = formset
+        return self.render_to_response(context)
