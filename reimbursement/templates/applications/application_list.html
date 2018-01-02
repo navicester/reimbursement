@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block tpl_content %}
+<div class="page">
+    {% for object in object_list %}
+    {{object}}<br>
+    {% endfor %}
+
+</div>
+{% endblock %}

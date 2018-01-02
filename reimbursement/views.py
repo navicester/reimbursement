@@ -32,8 +32,10 @@ from .models import (
     InvoiceImage, 
     Invoice,
     ReimbusementRequest,
+    ApprovalChain,
     )
 
+from .mixins import LoginRequiredMixin
 try:
     import Image
 except ImportError:
@@ -96,7 +98,7 @@ def home(request):
 
         # return JsonResponse({'utf8_text': utf8_text})    
 
-class InvoiceCreateView(CreateView):
+class InvoiceCreateView(LoginRequiredMixin, CreateView):
     #form_class = OfficeInspectionForm
     form_class = InvoiceForm #model_forms.modelform_factory(Invoice, exclude=["",], )
     template_name = "invoices/invoice_create.html"
@@ -120,7 +122,7 @@ class InvoiceCreateView(CreateView):
     def get_success_url(self, *args, **kwargs):
         return reverse("invoice_list", kwargs={}) 
 
-class InvoiceListView(ListView): 
+class InvoiceListView(LoginRequiredMixin, ListView): 
     model = Invoice
     template_name = "invoices/invoice_list.html"
 
@@ -139,14 +141,17 @@ class InvoiceListView(ListView):
         formset = InvoiceModelFormset(request.POST or None, request.FILES or None)
         # print request.POST
         if formset.is_valid():
+            print "valid formset"
             obj = ReimbusementRequest(status="inprogress",total_amount=0)
+            obj.launcher = self.request.user
+            obj.current_approver_chain = ApprovalChain.objects.get(prev_approver=None)  
             obj.save()
             instances = formset.save(commit=False)
             for instance in instances:
                 instance.reimbursement_request = obj
                 instance.invoice_status = 'inprogress'
                 instance.save()
-                obj.total_amount = obj.total_amount + instance.total_amount
+                obj.total_amount = obj.total_amount + instance.total_amount                              
                 obj.save()
             # messages.success(request, "Your list has been updated.")
             return redirect(reverse("invoice_list",  kwargs={}))
@@ -155,3 +160,29 @@ class InvoiceListView(ListView):
         context = self.get_context_data()
         context['formset'] = formset
         return self.render_to_response(context)
+
+class ApplicationListView(ListView): 
+    model = ReimbusementRequest
+    template_name = "applications/application_list.html"        
+
+class ApplicationFromMeListView(ListView): 
+    model = ReimbusementRequest
+    template_name = "applications/application_from_me_list.html"       
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ApplicationFromMeListView, self).get_context_data(*args, **kwargs)
+        object_list = context["object_list"]
+        context["object_list"] = object_list.filter(launcher=self.request.user)
+
+        return context
+
+class ApplicationToMeListView(ListView): 
+    model = ReimbusementRequest
+    template_name = "applications/application_to_me_list.html"       
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ApplicationToMeListView, self).get_context_data(*args, **kwargs)
+        object_list = context["object_list"]
+        context["object_list"] = object_list.filter(current_approver_chain__current_approver=self.request.user)
+
+        return context        

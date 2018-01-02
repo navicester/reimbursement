@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block tpl_content %}
+<div class="page">
+	未审批申请<br>
+    {% for object in object_list %}
+    {{object}}<br>
+    {% endfor %}
+
+</div>
+{% endblock %}

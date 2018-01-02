@@ -19,7 +19,12 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from reimbursement.views import home, InvoiceCreateView, InvoiceListView
+from reimbursement.views import (home, 
+    InvoiceCreateView, 
+    InvoiceListView, 
+    ApplicationListView,
+    ApplicationFromMeListView,
+    ApplicationToMeListView)
 
 admin.autodiscover()
 
@@ -30,6 +35,10 @@ urlpatterns = [
     url(r'^home', home, name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
     url(r'^invoices/create$', InvoiceCreateView.as_view(), name='invoice_create'),
+    url(r'^applications$', ApplicationListView.as_view(), name='application_list'),
+    url(r'^applications/fromme$', ApplicationFromMeListView.as_view(), name='application_from_me_list'),
+    url(r'^applications/tome$', ApplicationToMeListView.as_view(), name='application_to_me_list'),
+    url(r'^accounts/', include('registration.backends.default.urls')),        
 ]
 
 import os

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
+{% load staticfiles %}
 
 {% block tpl_content %}
 <div class="page">
@@ -8,6 +10,9 @@
         <p class="page__desc">未提交的费用</p>
     </div>
     <div class="page__bd">
+        {% if not formset %}
+            {% trans "Nothing found" %}
+        {% else%}
         <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
             <div class="weui-cells__title">选择要提交费用</div>
             <div class="weui-cells weui-cells_checkbox">
@@ -20,14 +25,15 @@
                         <i class="weui-icon-checked"></i>
                     </div>
                     <div class="weui-cell__bd">
-                        <p>{{form.instance}}</p>
+                        <p>{{form.instance}}</p><a href="{% url 'invoice_list' %}"></a>
                     </div>
                 </label>
-                <input id="id_form-{{forloop.counter0}}-id" name="form-{{forloop.counter0}}-id" type="hidden" value="{{forloop.counter}}" />
+                <input id="id_form-{{forloop.counter0}}-id" name="form-{{forloop.counter0}}-id" type="hidden" value="{{form.instance.pk}}" />
                 {% endfor %}
             </div>
             <input type="submit" class="weui-btn weui-btn_primary"value="提交审批"/>
         </form>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

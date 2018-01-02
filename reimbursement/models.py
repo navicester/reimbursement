@@ -3,6 +3,9 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save
+from django.conf import settings
+# from django.contrib.auth import get_user_model
+# User = get_user_model()
 
 class InvoiceImage(models.Model):
     image = models.ImageField(upload_to='img/upload')    
@@ -57,7 +60,10 @@ class Invoice(models.Model):
     reimbursement_request = models.ForeignKey('ReimbusementRequest', default=None, blank=True, null=True, verbose_name=_("reimbusement request"))
 
     def __unicode__(self): 
-        return "IV{0:0>5d}-{1}-{2}".format(self.id, self.invoice_category, self.invoice_project)
+        if self.id:
+            return "IV{0:0>5d}-{1}-{2}".format(self.id, self.invoice_category, self.invoice_project)
+        else:
+            return "unexpected result"
 
     # def __unicode__(self): 
     #     return "IV{0:0>5d}-{1}-{2}".format(self.id, self._get_FIELD_display(self._meta.get_field('invoice_category')), \
@@ -83,6 +89,8 @@ class ReimbusementRequest(models.Model):
     status = models.CharField(_('reimbursement status'), choices=reimbursement_status_option, max_length=30, blank=True, null=True, default="inprogress")
     # current_approver = models.CharField(_('current approver'), max_length=30, blank=True, null=False)
     total_amount = models.DecimalField(_('total amount'), decimal_places=2, max_digits=20, blank=False, null=False)
+    launcher = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('launcher'),blank=True, null=False)
+    current_approver_chain = models.ForeignKey('ApprovalChain', verbose_name=_('current approver chain'),blank=True, null=False)
 
     class Meta:
         verbose_name = _("reimbusement request")
@@ -90,3 +98,17 @@ class ReimbusementRequest(models.Model):
 
     def __unicode__(self): 
         return "IV{0:0>5d}-{1}".format(self.id, self.status)
+
+# pre_save.connect(user_saved, sender=ReimbusementRequest)
+
+class ApprovalChain(models.Model):
+    # type : chain for each project / type
+    prev_approver = models.ForeignKey('ApprovalChain', verbose_name=_('prev approver'),blank=True, null=True)
+    current_approver = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('current approver'),blank=False, null=False)    
+
+    class Meta:
+        verbose_name = _("approval chain")
+        verbose_name_plural = _("approval chain")
+
+    def __unicode__(self): 
+        return "{0}".format(self.current_approver)

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'reimbursement',
     'crispy_forms',
+    'registration',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -121,8 +122,8 @@ LANGUAGES = (
     ('zh-hant', ('繁体中文')),
 )
 
-# TIME_ZONE = 'UTC'
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'UTC'
+# TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
