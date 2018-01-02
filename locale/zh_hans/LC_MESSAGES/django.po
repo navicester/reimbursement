@@ -1,0 +1,136 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-27 20:53+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\forms.py:16 .\models.py:48
+msgid "currency"
+msgstr "汇率"
+
+#: .\models.py:18
+msgid "RMB"
+msgstr "人民币"
+
+#: .\models.py:19
+msgid "USD"
+msgstr "美元"
+
+#: .\models.py:20
+msgid "EUR"
+msgstr "欧元"
+
+#: .\models.py:24
+msgid "ordinary VAT invoice"
+msgstr "普票"
+
+#: .\models.py:25
+#| msgid "invoice"
+msgid "special invoice"
+msgstr "专票"
+
+#: .\models.py:26
+#| msgid "invoice"
+msgid "not invoice"
+msgstr "非发票"
+
+#: .\models.py:30
+msgid "Operation"
+msgstr "运营"
+
+#: .\models.py:31
+msgid "Market"
+msgstr "市场"
+
+#: .\models.py:32
+msgid "R&D"
+msgstr "研发"
+
+#: .\models.py:36
+msgid "Meals"
+msgstr "餐饮"
+
+#: .\models.py:37
+msgid "Rent"
+msgstr "房租"
+
+#: .\models.py:38
+msgid "Travel"
+msgstr "出差"
+
+#: .\models.py:42
+msgid "not submitted"
+msgstr "未提交"
+
+#: .\models.py:43 .\models.py:77
+msgid "in progress"
+msgstr "处理中"
+
+#: .\models.py:44 .\models.py:78
+msgid "approved"
+msgstr "已批准"
+
+#: .\models.py:47 .\models.py:85
+msgid "total amount"
+msgstr "总额"
+
+#: .\models.py:49
+msgid "base amount"
+msgstr "本位金"
+
+#: .\models.py:50
+msgid "VAT amount"
+msgstr "增值税"
+
+#: .\models.py:51
+msgid "invoice type"
+msgstr "发票种类"
+
+#: .\models.py:52
+msgid "invoice date"
+msgstr "发票日期"
+
+#: .\models.py:53
+msgid "invoice category"
+msgstr "发票分类"
+
+#: .\models.py:54
+msgid "invoice project"
+msgstr "发票项目"
+
+#: .\models.py:55
+msgid "invoice comments"
+msgstr "备注"
+
+#: .\models.py:56
+msgid "invoice status"
+msgstr "发票状态"
+
+#: .\models.py:57 .\models.py:88 .\models.py:89
+msgid "reimbusement request"
+msgstr "报销申请"
+
+#: .\models.py:70 .\models.py:71
+msgid "invoice"
+msgstr "发票"
+
+#: .\models.py:79
+msgid "rejected"
+msgstr "拒绝"
+
+#: .\models.py:83
+msgid "reimbursement status"
+msgstr "报销状态"
