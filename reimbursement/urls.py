@@ -21,10 +21,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from reimbursement.views import (home, 
     InvoiceCreateView, 
+    InvoiceDetailView,
+    InvoiceCreateQRScanView,
     InvoiceListView, 
     ApplicationListView,
     ApplicationFromMeListView,
-    ApplicationToMeListView)
+    ApplicationToMeListView,
+    ApplicationDetailView,
+    
+    )
 
 admin.autodiscover()
 
@@ -34,10 +39,13 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^home', home, name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
+    url(r'^invoices/(?P<pk>\d+)$', InvoiceDetailView.as_view(), name='invoice_detail'),
     url(r'^invoices/create$', InvoiceCreateView.as_view(), name='invoice_create'),
-    url(r'^applications$', ApplicationListView.as_view(), name='application_list'),
-    url(r'^applications/fromme$', ApplicationFromMeListView.as_view(), name='application_from_me_list'),
-    url(r'^applications/tome$', ApplicationToMeListView.as_view(), name='application_to_me_list'),
+    url(r'^invoices/create/qrscan$', InvoiceCreateQRScanView.as_view(), name='invoice_create_qrscan'),
+    url(r'^applications/(?P<pk>\d+)/$', ApplicationDetailView.as_view(), name='application_detail'),
+    url(r'^applications/$', ApplicationListView.as_view(), name='application_list'),    
+    url(r'^applications/fromme/$', ApplicationFromMeListView.as_view(), name='application_from_me_list'),
+    url(r'^applications/tome/$', ApplicationToMeListView.as_view(), name='application_to_me_list'),
     url(r'^accounts/', include('registration.backends.default.urls')),        
 ]
 

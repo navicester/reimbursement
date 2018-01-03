@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block tpl_content %}
+<div class="page">
+    
+</div>
+{% endblock %}
+
+<script type="text/javascript" charset="utf-8">
+
+{% block jquery %}
+
+    wx.scanQRCode({
+      needResult: 1,
+      desc: 'scanQRCode desc',
+      success: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+
+    wx.config({
+        debug: false,
+        appId: '{{signPackage.appId}}',
+        timestamp:'{{signPackage.timestamp}}',
+        nonceStr: '{{signPackage.nonceStr}}',
+        signature: '{{signPackage.signature}}',
+        jsApiList: [
+            'checkJsApi',
+            'scanQRCode'
+            ]
+        });
+
+    wx.ready(function () {
+        wx.checkJsApi({
+            jsApiList: [
+                'scanQRCode'
+            ],
+            success: function (res) {
+                console.log("checkJsApi res");
+            }
+        });
+    })
+
+    wx.error(function(res){
+        console.log("wx.error");
+    });
+
+{% endblock %}
+</script>

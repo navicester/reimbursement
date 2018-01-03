@@ -99,6 +99,9 @@ class ReimbusementRequest(models.Model):
     def __unicode__(self): 
         return "IV{0:0>5d}-{1}".format(self.id, self.status)
 
+    def get_absolute_url(self):
+        return reverse("application_detail", kwargs={"pk": self.pk })
+
 # pre_save.connect(user_saved, sender=ReimbusementRequest)
 
 class ApprovalChain(models.Model):
