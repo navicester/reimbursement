@@ -2,8 +2,8 @@
 {% load crispy_forms_tags %}
 
 {% block tpl_content %}
-<div class="page">
-    
+<div class="page">    
+    {{signPackage}}
 </div>
 {% endblock %}
 
@@ -32,6 +32,14 @@
                 console.log("checkJsApi res");
             }
         });
+
+        wx.scanQRCode({
+          needResult: 1,
+          desc: 'scanQRCode desc',
+          success: function (res) {
+            alert(JSON.stringify(res));
+          }
+        });        
     })
 
 
@@ -39,13 +47,7 @@
         console.log("wx.error");
     });
 
-    wx.scanQRCode({
-      needResult: 1,
-      desc: 'scanQRCode desc',
-      success: function (res) {
-        alert(JSON.stringify(res));
-      }
-    });
+
 
 
 {% endblock %}
