@@ -122,6 +122,19 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self, *args, **kwargs):
         return reverse("invoice_list", kwargs={}) 
 
+class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
+    template_name = "invoices/invoice_create_qrscan.html"
+    model = Invoice
+    form_class = InvoiceForm
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvoiceCreateQRScanView, self).get_context_data(*args, **kwargs)
+        from wechat.client import WechatAPI
+        api = WechatAPI(request = self.request)
+        context["signPackage"] = api.getSignPackage()
+
+        return context
+
 class InvoiceListView(LoginRequiredMixin, ListView): 
     model = Invoice
     template_name = "invoices/invoice_list.html"

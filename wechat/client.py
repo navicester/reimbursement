@@ -3,7 +3,7 @@
 from django.core.urlresolvers import reverse
 from weixin.client import WeixinMpAPI
 
-from zakkabag.settings import APP_ID, APP_SECRET
+from reimbursement.settings import APP_ID, APP_SECRET
 #APP_ID = 'wxe90ebbe29377e650'
 #APP_SECRET = 'd4624c36b6795d1d99dcf0547af5443d'
 

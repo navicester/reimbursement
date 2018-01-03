@@ -21,10 +21,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from reimbursement.views import (home, 
     InvoiceCreateView, 
+    InvoiceCreateQRScanView,
     InvoiceListView, 
     ApplicationListView,
     ApplicationFromMeListView,
-    ApplicationToMeListView)
+    ApplicationToMeListView,
+    
+    )
 
 admin.autodiscover()
 
@@ -35,6 +38,7 @@ urlpatterns = [
     url(r'^home', home, name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
     url(r'^invoices/create$', InvoiceCreateView.as_view(), name='invoice_create'),
+    url(r'^invoices/create/qrscan$', InvoiceCreateQRScanView.as_view(), name='invoice_create_qrscan'),
     url(r'^applications$', ApplicationListView.as_view(), name='application_list'),
     url(r'^applications/fromme$', ApplicationFromMeListView.as_view(), name='application_from_me_list'),
     url(r'^applications/tome$', ApplicationToMeListView.as_view(), name='application_to_me_list'),
