@@ -98,6 +98,10 @@ def home(request):
 
         # return JsonResponse({'utf8_text': utf8_text})    
 
+class InvoiceDetailView(DetailView):
+    template_name = "invoices/invoice_detail.html"
+    model = Invoice
+
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
     #form_class = OfficeInspectionForm
     form_class = InvoiceForm #model_forms.modelform_factory(Invoice, exclude=["",], )
@@ -167,7 +171,7 @@ class InvoiceListView(LoginRequiredMixin, ListView):
                 obj.total_amount = obj.total_amount + instance.total_amount                              
                 obj.save()
             # messages.success(request, "Your list has been updated.")
-            return redirect(reverse("invoice_list",  kwargs={}))
+            
 
         self.object_list = self.get_queryset() # copy from BaseListView::get
         context = self.get_context_data()
@@ -177,6 +181,16 @@ class InvoiceListView(LoginRequiredMixin, ListView):
 class ApplicationListView(ListView): 
     model = ReimbusementRequest
     template_name = "applications/application_list.html"        
+
+class ApplicationDetailView(DetailView):
+    model = ReimbusementRequest
+    template_name = "applications/application_detail.html"  
+
+    def post(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.status = 'approved'
+        instance.save()
+        return redirect(reverse("application_to_me_list",  kwargs={}))
 
 class ApplicationFromMeListView(ListView): 
     model = ReimbusementRequest

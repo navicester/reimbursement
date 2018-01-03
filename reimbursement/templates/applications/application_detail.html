@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block tpl_content %}
+<div class="page">
+	<form class="form-horizontal" enctype="multipart/form-data" method="post" action='' >{% csrf_token %}
+		{{object}}
+        <input type="submit" class="weui-btn weui-btn_primary"value="批准"/>
+        </form>
+</div>
+{% endblock %}

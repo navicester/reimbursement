@@ -139,3 +139,33 @@
     </form>
 </div>
 {% endblock %}
+
+
+<script>
+{% block jquery %}
+
+    function calc_total_amout(){
+        base = $("#id_base_amount").val();
+        VAT = $("#id_VAT_amount").val();
+        total = 0;
+        if(base){
+            total += parseFloat(base);
+        }
+        if(VAT){
+            total += parseFloat(VAT);
+        }
+        return total;
+    }
+
+    $("#id_base_amount").change(function(){        
+        $("input#id_total_amount").val(calc_total_amout());
+        $("input#id_total_amount").css("color", 'green');
+    });
+
+    $("#id_VAT_amount").change(function(){        
+        $("input#id_total_amount").val(calc_total_amout());
+        $("input#id_total_amount").css("color", 'green');
+    });
+        
+{% endblock%}
+</script>
