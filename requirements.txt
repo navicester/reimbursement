@@ -1,8 +1,10 @@
 certifi==2017.11.5
 chardet==3.0.4
+dj-database-url==0.3.0
 Django==1.9
 django-crispy-forms==1.6.0
 django-registration-redux==1.4
+gunicorn==19.4.5
 idna==2.6
 olefile==0.44
 Pillow==4.3.0
