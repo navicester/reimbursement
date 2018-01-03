@@ -171,6 +171,7 @@ class InvoiceListView(LoginRequiredMixin, ListView):
                 obj.total_amount = obj.total_amount + instance.total_amount                              
                 obj.save()
             # messages.success(request, "Your list has been updated.")
+            return redirect(reverse("invoice_list",  kwargs={}))
             
 
         self.object_list = self.get_queryset() # copy from BaseListView::get
