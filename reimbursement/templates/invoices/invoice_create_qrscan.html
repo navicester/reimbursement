@@ -11,14 +11,6 @@
 
 {% block jquery %}
 
-    wx.scanQRCode({
-      needResult: 1,
-      desc: 'scanQRCode desc',
-      success: function (res) {
-        alert(JSON.stringify(res));
-      }
-    });
-
     wx.config({
         debug: false,
         appId: '{{signPackage.appId}}',
@@ -42,9 +34,19 @@
         });
     })
 
+
     wx.error(function(res){
         console.log("wx.error");
     });
+
+    wx.scanQRCode({
+      needResult: 1,
+      desc: 'scanQRCode desc',
+      success: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+
 
 {% endblock %}
 </script>
