@@ -211,6 +211,6 @@ class ApplicationToMeListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(ApplicationToMeListView, self).get_context_data(*args, **kwargs)
         object_list = context["object_list"]
-        context["object_list"] = object_list.filter(current_approver_chain__current_approver=self.request.user)
+        context["object_list"] = object_list.filter(current_approver_chain__current_approver=self.request.user).exclude(status="approved")
 
         return context        

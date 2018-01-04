@@ -61,7 +61,12 @@ class Invoice(models.Model):
 
     def __unicode__(self): 
         if self.id:
-            return "IV{0:0>5d}-{1}-{2}".format(self.id, self.invoice_category, self.invoice_project)
+            print self.my_get_field_display('invoice_category')
+            return "IV{0:0>5d}".format(self.id) + "-" + \
+                self.my_get_field_display('invoice_category') + "-" +\
+                self.my_get_field_display('invoice_project')
+            # return "IV{0:0>5d}-{1}-{2}".format(self.id, self.my_get_field_display('invoice_category'), \
+                # self.my_get_field_display('invoice_project'))            
         else:
             return "unexpected result"
 
@@ -71,6 +76,14 @@ class Invoice(models.Model):
 
     def get_absolute_url(self):
         return reverse("invoice_detail", kwargs={"pk": self.pk })
+
+    def my_get_field_display(self,fieldname):
+
+        if not hasattr(self, fieldname):
+            return None
+        
+        field = self.__class__._meta.get_field(fieldname)
+        return "%s" % self._get_FIELD_display(field)  
 
     class Meta:
         verbose_name = _("invoice")
@@ -97,10 +110,18 @@ class ReimbusementRequest(models.Model):
         verbose_name_plural = _("reimbusement request")
 
     def __unicode__(self): 
-        return "IV{0:0>5d}-{1}".format(self.id, self.status)
+        return "IV{0:0>5d}-".format(self.id) + self.my_get_field_display('status')
 
     def get_absolute_url(self):
         return reverse("application_detail", kwargs={"pk": self.pk })
+
+    def my_get_field_display(self,fieldname):
+
+        if not hasattr(self, fieldname):
+            return None
+        
+        field = self.__class__._meta.get_field(fieldname)
+        return "%s" % self._get_FIELD_display(field)  
 
 # pre_save.connect(user_saved, sender=ReimbusementRequest)
 
