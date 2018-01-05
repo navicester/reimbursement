@@ -38,6 +38,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^home', home, name="home"),
+    url(r'^$', home, name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
     url(r'^invoices/(?P<pk>\d+)$', InvoiceDetailView.as_view(), name='invoice_detail'),
     url(r'^invoices/create$', InvoiceCreateView.as_view(), name='invoice_create'),

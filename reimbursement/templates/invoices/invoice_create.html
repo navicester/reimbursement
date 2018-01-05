@@ -95,7 +95,7 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label for="id_invoice_date" class="weui-label">日期</label></div>
                 <div class="weui-cell__bd {% if form.invoice_date.errors %} error has-error{% endif %}">
-                    <input id="id_invoice_date" name="invoice_date" class="weui-input" type="date" value="{% if form.invoice_date.value %}{{form.invoice_date.value}}{% endif %}"/>
+                    <input id="id_invoice_date" name="invoice_date" class="weui-input" type="date" value="{% if form.invoice_date.value %}{{form.invoice_date.value}}{%else%}{{today}}{% endif %}"/>
                 </div>
             </div>
 

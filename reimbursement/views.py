@@ -15,6 +15,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.forms.models import modelformset_factory
 from django.forms import models as model_forms
+from django.utils import timezone
 
 # import sys
 # reload(sys)
@@ -126,6 +127,12 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self, *args, **kwargs):
         return reverse("invoice_list", kwargs={}) 
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvoiceCreateView, self).get_context_data(*args, **kwargs)
+        context["today"] = timezone.now().strftime('%Y-%m-%d')
+
+        return context
+
 class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
     template_name = "invoices/invoice_create_qrscan.html"
     model = Invoice
@@ -189,7 +196,21 @@ class ApplicationDetailView(DetailView):
 
     def post(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.status = 'approved'
+        approve_status = self.request.POST['action']
+        if approve_status == 'approved':            
+            try:
+                instance.current_approver_chain = ApprovalChain.objects.get(prev_approver=instance.current_approver_chain)   
+            except:
+                instance.status = 'approved'
+                for obj in instance.invoice_set.all():
+                    obj.invoice_status = "approved"
+                    obj.save()
+        else:
+            instance.status = 'rejected'
+            if instance.current_approver_chain.prev_approver:
+                instance.current_approver_chain = instance.current_approver_chain.prev_approver
+            else:
+                instance.current_approver_chain = None 
         instance.save()
         return redirect(reverse("application_to_me_list",  kwargs={}))
 
@@ -211,6 +232,7 @@ class ApplicationToMeListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super(ApplicationToMeListView, self).get_context_data(*args, **kwargs)
         object_list = context["object_list"]
-        context["object_list"] = object_list.filter(current_approver_chain__current_approver=self.request.user).exclude(status="approved")
+        context["object_list"] = object_list.filter(current_approver_chain__current_approver=self.request.user).\
+            exclude(status="approved").exclude(status="rejected")
 
         return context        

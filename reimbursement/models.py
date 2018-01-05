@@ -64,7 +64,7 @@ class Invoice(models.Model):
             print self.my_get_field_display('invoice_category')
             return "IV{0:0>5d}".format(self.id) + "-" + \
                 self.my_get_field_display('invoice_category') + "-" +\
-                self.my_get_field_display('invoice_project')
+                self.my_get_field_display('invoice_project') + "-" + "{0}".format(self.total_amount)
             # return "IV{0:0>5d}-{1}-{2}".format(self.id, self.my_get_field_display('invoice_category'), \
                 # self.my_get_field_display('invoice_project'))            
         else:
@@ -103,7 +103,7 @@ class ReimbusementRequest(models.Model):
     # current_approver = models.CharField(_('current approver'), max_length=30, blank=True, null=False)
     total_amount = models.DecimalField(_('total amount'), decimal_places=2, max_digits=20, blank=False, null=False)
     launcher = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('launcher'),blank=True, null=False)
-    current_approver_chain = models.ForeignKey('ApprovalChain', verbose_name=_('current approver chain'),blank=True, null=False)
+    current_approver_chain = models.ForeignKey('ApprovalChain', verbose_name=_('current approver chain'),blank=True, null=True)
 
     class Meta:
         verbose_name = _("reimbusement request")

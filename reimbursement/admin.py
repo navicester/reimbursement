@@ -26,6 +26,7 @@ class InvoiceInline(admin.TabularInline):
 
 class ReimbusementRequestAdmin(admin.ModelAdmin):
     list_display = [ 
+        "id",
         "status", 
         "total_amount", 
         ]
