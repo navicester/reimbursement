@@ -32,11 +32,13 @@
 	            </div>
 	        {% endfor %}  
 	        </div>
+	        {% block application_operation %}
 	        <div class="weui-form-preview__ft">
 	        	<input id="approve_action" type="hidden" name="action" value="approved">
 	            <a class="weui-form-preview__btn weui-form-preview__btn_default"  href="#" onclick="calc_total_amout()">拒绝</a>
 	            <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">同意</button>                
 	        </div>    
+	        {% endblock %}
 	    </div>
 	    <div class="page__ft">
 	        <!-- <a href="javascript:home()"><img src="./images/icon_footer_link.png" /></a> -->

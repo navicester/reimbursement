@@ -34,6 +34,7 @@ from .models import (
     Invoice,
     ReimbusementRequest,
     ApprovalChain,
+    ApprovalRecord,
     )
 
 from .mixins import LoginRequiredMixin
@@ -102,6 +103,7 @@ def home(request):
 class InvoiceDetailView(DetailView):
     template_name = "invoices/invoice_detail.html"
     model = Invoice
+
 
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
     #form_class = OfficeInspectionForm
@@ -212,9 +214,28 @@ class ApplicationDetailView(DetailView):
             else:
                 instance.current_approver_chain = None 
         instance.save()
+
+        approve_record, created = ApprovalRecord.objects.get_or_create(approver=self.request.user, reimbursement_request=instance)
+        approve_record.status = approve_status
+        if created:
+            approve_record.reimbursement_request = instance
+            approve_record.approver=self.request.user
+        approve_record.save()
+
         return redirect(reverse("application_to_me_list",  kwargs={}))
 
-class ApplicationFromMeListView(ListView): 
+
+class ApplicationHistoryDetailView(DetailView):
+    template_name = "applications/application_detail_history.html"  
+    model = ReimbusementRequest
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ApplicationHistoryDetailView, self).get_context_data(*args, **kwargs)
+        approval_record_list = ApprovalRecord.objects.filter(reimbursement_request=self.get_object())
+        context["approval_record_list"] = approval_record_list
+        return context  
+
+class ApplicationFromMeListView(LoginRequiredMixin, ListView): 
     model = ReimbusementRequest
     template_name = "applications/application_from_me_list.html"       
 
@@ -225,7 +246,7 @@ class ApplicationFromMeListView(ListView):
 
         return context
 
-class ApplicationToMeListView(ListView): 
+class ApplicationToMeListView(LoginRequiredMixin, ListView): 
     model = ReimbusementRequest
     template_name = "applications/application_to_me_list.html"       
 
@@ -234,5 +255,13 @@ class ApplicationToMeListView(ListView):
         object_list = context["object_list"]
         context["object_list"] = object_list.filter(current_approver_chain__current_approver=self.request.user).\
             exclude(status="approved").exclude(status="rejected")
+
+        # context["object_list_approved"] = object_list.filter(approvalrecord__approver=self.request.user,
+        #     approvalrecord__status="approved")
+        approval_record_list = ApprovalRecord.objects.filter(approver=self.request.user, status="approved")
+        context["object_list_approved"] = None if not approval_record_list else [obj.reimbursement_request for obj in approval_record_list ]
+
+        rejected_record_list = ApprovalRecord.objects.filter(approver=self.request.user, status="rejected")
+        context["object_list_rejected"] = None if not rejected_record_list else [obj.reimbursement_request for obj in rejected_record_list ]
 
         return context        

@@ -1,7 +1,7 @@
 from django.contrib import admin
 # Register your models here.
 # from .forms import SignUpForm
-from .models import Invoice, ReimbusementRequest, ApprovalChain
+from .models import Invoice, ReimbusementRequest, ApprovalChain, ApprovalRecord
 
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = [ 
@@ -24,6 +24,10 @@ class InvoiceInline(admin.TabularInline):
     model = Invoice  
     extra = 0
 
+class ApprovalRecordInline(admin.TabularInline):
+    model = ApprovalRecord
+    extra = 0
+
 class ReimbusementRequestAdmin(admin.ModelAdmin):
     list_display = [ 
         "id",
@@ -35,6 +39,7 @@ class ReimbusementRequestAdmin(admin.ModelAdmin):
 
     inlines = [
         InvoiceInline,
+        ApprovalRecordInline,
     ]
             
     class Meta:
