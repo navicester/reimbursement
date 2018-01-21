@@ -57,6 +57,7 @@ class Invoice(models.Model):
     invoice_project = models.CharField(_('invoice project'), choices=invoice_project_option, max_length=30, blank=False, null=False)
     comments = models.CharField(_('invoice comments'), max_length=30, blank=True, null=True)
     invoice_status = models.CharField(_('invoice status'), choices=invoice_status_option, max_length=30, blank=True, null=True, default="notsubmitted")
+    image = models.ImageField(_('image'), upload_to='invoice/image', blank=True, null=True)
     reimbursement_request = models.ForeignKey('ReimbusementRequest', default=None, blank=True, null=True, verbose_name=_("reimbusement request"))
 
     def __unicode__(self): 
@@ -76,6 +77,7 @@ class Invoice(models.Model):
 
     def get_absolute_url(self):
         return reverse("invoice_detail", kwargs={"pk": self.pk })
+
 
     def my_get_field_display(self,fieldname):
 
@@ -111,9 +113,14 @@ class ReimbusementRequest(models.Model):
 
     def __unicode__(self): 
         return "IV{0:0>5d}-".format(self.id) + self.my_get_field_display('status')
+        # return "IV{0:0>5d}-".format(self.id) + self.status
 
     def get_absolute_url(self):
         return reverse("application_detail", kwargs={"pk": self.pk })
+
+    def get_absolute_url_history(self):
+        return reverse("application_detail_history", kwargs={"pk": self.pk })
+
 
     def my_get_field_display(self,fieldname):
 
@@ -136,3 +143,17 @@ class ApprovalChain(models.Model):
 
     def __unicode__(self): 
         return "{0}".format(self.current_approver)
+
+class ApprovalRecord(models.Model):
+    reimbursement_status_option = [
+        ('inprogress', _('in progress')),
+        ('approved', _('approved')),
+        ('rejected', _('rejected')),        
+    ]     
+    approver = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('approver'),blank=False, null=False)    
+    status = models.CharField(_('reimbursement status'), choices=reimbursement_status_option, max_length=30, blank=True, null=True, default="inprogress")
+    comments = models.CharField(_('approve comments'), max_length=30, blank=True, null=True)
+    reimbursement_request = models.ForeignKey('ReimbusementRequest', default=None, blank=False, null=False, verbose_name=_("reimbusement request"))
+
+    def __unicode__(self): 
+        return "{0}-{1}".format(self.approver, self.status)

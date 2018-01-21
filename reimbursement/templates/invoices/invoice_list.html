@@ -4,13 +4,13 @@
 {% load staticfiles %}
 
 {% block tpl_content %}
-<div class="page">
+<div class="page" style="padding: 0 5px 0 5px ">
     <div class="page__hd">
-        <h1 class="page__title">&nbsp;未提交发票</h1>
+        <h3 style="color: red;" class="page__title">&nbsp;未提交发票</h3>
         <!-- <p class="page__desc">&nbsp;&nbsp;勾选相应发票去提交</p> -->
     </div>
     <div class="page__bd">
-        {% if not formset %}
+        {% if not formset or not formset.queryset.count %}
             {% trans "No unsumbitted invoice" %}
         {% else%}
         <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}

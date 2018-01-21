@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-27 20:53+0800\n"
+"POT-Creation-Date: 2018-01-09 17:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,120 +17,165 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\forms.py:16 .\models.py:48
+#: .\reimbursement\forms.py:16 .\reimbursement\models.py:51
 msgid "currency"
 msgstr "汇率"
 
-#: .\models.py:18
-msgid "RMB"
-msgstr "人民币"
-
-#: .\models.py:19
-msgid "USD"
-msgstr "美元"
-
-#: .\models.py:20
-msgid "EUR"
-msgstr "欧元"
-
-#: .\models.py:24
-msgid "ordinary VAT invoice"
-msgstr "普票"
-
-#: .\models.py:25
-#| msgid "invoice"
-msgid "special invoice"
-msgstr "专票"
-
-#: .\models.py:26
-#| msgid "invoice"
-msgid "not invoice"
-msgstr "非发票"
-
-#: .\models.py:30
-msgid "Operation"
-msgstr "运营"
-
-#: .\models.py:31
-msgid "Market"
-msgstr "市场"
-
-#: .\models.py:32
-msgid "R&D"
-msgstr "研发"
-
-#: .\models.py:36
-msgid "Meals"
-msgstr "餐饮"
-
-#: .\models.py:37
-msgid "Rent"
-msgstr "房租"
-
-#: .\models.py:38
-msgid "Travel"
-msgstr "出差"
-
-#: .\models.py:42
-msgid "not submitted"
-msgstr "未提交"
-
-#: .\models.py:43 .\models.py:77
-msgid "in progress"
-msgstr "处理中"
-
-#: .\models.py:44 .\models.py:78
-msgid "approved"
-msgstr "已批准"
-
-#: .\models.py:47 .\models.py:85
-msgid "total amount"
-msgstr "总额"
-
-#: .\models.py:49
-msgid "base amount"
-msgstr "本位金"
-
-#: .\models.py:50
-msgid "VAT amount"
-msgstr "增值税"
-
-#: .\models.py:51
+#: .\reimbursement\forms.py:23 .\reimbursement\models.py:54
 msgid "invoice type"
 msgstr "发票种类"
 
-#: .\models.py:52
+#: .\reimbursement\models.py:21
+msgid "RMB"
+msgstr "人民币"
+
+#: .\reimbursement\models.py:22
+msgid "USD"
+msgstr "美元"
+
+#: .\reimbursement\models.py:23
+msgid "EUR"
+msgstr "欧元"
+
+#: .\reimbursement\models.py:27
+msgid "ordinary VAT invoice"
+msgstr "普票"
+
+#: .\reimbursement\models.py:28
+msgid "special invoice"
+msgstr "专票"
+
+#: .\reimbursement\models.py:29
+msgid "not invoice"
+msgstr "非发票"
+
+#: .\reimbursement\models.py:33
+msgid "Operation"
+msgstr "运营"
+
+#: .\reimbursement\models.py:34
+msgid "Market"
+msgstr "市场"
+
+#: .\reimbursement\models.py:35
+msgid "R&D"
+msgstr "研发"
+
+#: .\reimbursement\models.py:39
+msgid "Meals"
+msgstr "餐饮"
+
+#: .\reimbursement\models.py:40
+msgid "Rent"
+msgstr "房租"
+
+#: .\reimbursement\models.py:41
+msgid "Travel"
+msgstr "出差"
+
+#: .\reimbursement\models.py:45
+msgid "not submitted"
+msgstr "未提交"
+
+#: .\reimbursement\models.py:46 .\reimbursement\models.py:97
+#: .\reimbursement\models.py:147
+msgid "in progress"
+msgstr "处理中"
+
+#: .\reimbursement\models.py:47 .\reimbursement\models.py:98
+#: .\reimbursement\models.py:148
+msgid "approved"
+msgstr "已批准"
+
+#: .\reimbursement\models.py:50 .\reimbursement\models.py:105
+msgid "total amount"
+msgstr "总额"
+
+#: .\reimbursement\models.py:52
+msgid "base amount"
+msgstr "本位金"
+
+#: .\reimbursement\models.py:53
+msgid "VAT amount"
+msgstr "增值税"
+
+#: .\reimbursement\models.py:55
 msgid "invoice date"
 msgstr "发票日期"
 
-#: .\models.py:53
+#: .\reimbursement\models.py:56
 msgid "invoice category"
 msgstr "发票分类"
 
-#: .\models.py:54
+#: .\reimbursement\models.py:57
 msgid "invoice project"
 msgstr "发票项目"
 
-#: .\models.py:55
+#: .\reimbursement\models.py:58
 msgid "invoice comments"
 msgstr "备注"
 
-#: .\models.py:56
+#: .\reimbursement\models.py:59
 msgid "invoice status"
 msgstr "发票状态"
 
-#: .\models.py:57 .\models.py:88 .\models.py:89
+#: .\reimbursement\models.py:60 .\reimbursement\models.py:110
+#: .\reimbursement\models.py:111 .\reimbursement\models.py:154
 msgid "reimbusement request"
 msgstr "报销申请"
 
-#: .\models.py:70 .\models.py:71
+#: .\reimbursement\models.py:90 .\reimbursement\models.py:91
 msgid "invoice"
 msgstr "发票"
 
-#: .\models.py:79
+#: .\reimbursement\models.py:99 .\reimbursement\models.py:149
 msgid "rejected"
 msgstr "拒绝"
 
-#: .\models.py:83
+#: .\reimbursement\models.py:103 .\reimbursement\models.py:152
 msgid "reimbursement status"
 msgstr "报销状态"
+
+#: .\reimbursement\models.py:106
+msgid "launcher"
+msgstr ""
+
+#: .\reimbursement\models.py:107
+msgid "current approver chain"
+msgstr "当前审批流"
+
+#: .\reimbursement\models.py:135
+#| msgid "approved"
+msgid "prev approver"
+msgstr "前审批人"
+
+#: .\reimbursement\models.py:136
+msgid "current approver"
+msgstr "当前审批人"
+
+#: .\reimbursement\models.py:139 .\reimbursement\models.py:140
+msgid "approval chain"
+msgstr "审批流"
+
+#: .\reimbursement\models.py:151
+#| msgid "approved"
+msgid "approver"
+msgstr "已批准"
+
+#: .\reimbursement\models.py:153
+#| msgid "invoice comments"
+msgid "approve comments"
+msgstr "备注"
+
+#: .\reimbursement\templates\invoices\invoice_list.html:14
+#| msgid "not invoice"
+msgid "No unsumbitted invoice"
+msgstr "没有未提交发票"
+
+#: .\reimbursement\templatetags\myform.py:74
+msgid "Yes"
+msgstr "是"
+
+#: .\reimbursement\templatetags\myform.py:76
+msgid "No"
+msgstr "否"
