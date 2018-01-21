@@ -1,20 +1,44 @@
 {% extends "registration/registration_base.html" %}
 {% load i18n %}
+{% load crispy_forms_tags %}
+
 
 {% block title %}{% trans "Log in" %}{% endblock %}
 
-{% block content %}
-<div class = "row">
-    <div class = "col-sm-3 col-sm-offset-3">
-        <form method="post" action="">
-            {% csrf_token %}
-            {{ form|crispy }}
-            <input class = "btn btn-block btn-primary" type="submit" value="{% trans 'Log in' %}" />
-            <input type="hidden" name="next" value="{{ next }}" />
-        </form>
+{% block tpl_content %}
+<div class="page">
+    <form method="post" action="">{% csrf_token %}
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">用户名</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" name='username' id='id_username' placeholder="请输入用户名">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="password" name='password' id='password' placeholder="密码">
+                </div>
+            </div>
 
-        <p>{% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>.</p>
-        <p>{% trans "Not a member?" %} <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>.</p>
+            <input class = "weui-btn weui-btn_primary" type="submit" value="{% trans 'Log in' %}" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </div>
+    </form>
+
+    <div class = "row">
+        <div class = "col-sm-3 col-sm-offset-3">
+<!--             <form method="post" action="">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <input class = "weui-btn weui-btn_primary" type="submit" value="{% trans 'Log in' %}" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form> -->
+
+            <!-- <p>{% trans "Forgot your password?" %} <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>.</p>
+            <p>{% trans "Not a member?" %} <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>.</p> -->
+        </div>
     </div>
 </div>
 {% endblock %}

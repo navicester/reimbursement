@@ -1,6 +1,6 @@
 
 {% load staticfiles %}
-
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
@@ -63,7 +63,7 @@
     {% block tpl_content %}
         <div class="page">
             <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
-                {{form}}
+                {{form|crispy}}
                 <input type="submit" class="weui-btn weui-btn_primary"value="提交"/>
             </form>
             
