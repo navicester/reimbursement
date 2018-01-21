@@ -156,14 +156,14 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
         if request.is_ajax():
             result = request.POST.get('resultStr')
             if not result:
-                return JsonResponse({'status':'success'})
+                return JsonResponse({'status':'fail'})
                 result = '01,10,031001600211,77480574,83.96,20171230,59326830950603727351,09ED'
             result_list = result.split(',')
             if 'scan resultStr is here' == result:
                 return JsonResponse({'status':'deault'})
             # elif len(result_list) < 8:
             #     return JsonResponse({'status':'fail'})
-            
+
             # 01,10 01,04是普通发票，01,01是专用发票
             # 031001600211 发票代码
             # 77480574 发票号码
@@ -173,7 +173,7 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
             # 09ED 随机产生的机密信息
 
             data = {
-                'status':'fail',
+                'status':'success',
                 'base_amount' : result_list[4],  
                 'VAT_amount' : "{:.2f}".format(float(result_list[4])*0.06),                          
                 'total_amount' : "{:.2f}".format(float(result_list[4])*1.06),
