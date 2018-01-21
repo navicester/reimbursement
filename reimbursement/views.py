@@ -161,8 +161,9 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
             result_list = result.split(',')
             if 'scan resultStr is here' == result:
                 return JsonResponse({'status':'deault'})
-            elif len(result_list) < 8:
-                return JsonResponse({'status':'fail'})
+            # elif len(result_list) < 8:
+            #     return JsonResponse({'status':'fail'})
+            
             # 01,10 01,04是普通发票，01,01是专用发票
             # 031001600211 发票代码
             # 77480574 发票号码
