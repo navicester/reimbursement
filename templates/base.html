@@ -28,6 +28,10 @@
     a:hover { text-decoration:none; color: none}     
     a:visited { text-decoration: none; color: black;}
 
+    .weui-navbar a{
+        color:black;
+    }
+
     </style>
     {% endblock%}
 </head>
@@ -87,7 +91,7 @@
                         <a href="{% url 'invoice_list' %}" class="weui-tabbar__item weui-bar__item_on">
                             <span style="display: inline-block;position: relative;">
                                 <img src="{% static 'images/icon_tabbar.png' %}" alt="" class="weui-tabbar__icon">
-                                <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
+                                <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">{{request.session.invoice_list_count}}</span>
                             </span>
                             <p class="weui-tabbar__label">个人</p>
                         </a>

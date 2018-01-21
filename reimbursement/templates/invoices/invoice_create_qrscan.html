@@ -58,7 +58,7 @@ function csrfSafeMethod(method) {
             needResult: 1,
             desc: 'scanQRCode desc',
             success: function (res) {
-                // alert(JSON.stringify(res));
+                alert(JSON.stringify(res));
                 $.ajax({
                     url: "qrscan",
                     data: JSON.stringify(res),

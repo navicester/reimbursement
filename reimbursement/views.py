@@ -16,6 +16,7 @@ from django.utils.translation import ugettext as _
 from django.forms.models import modelformset_factory
 from django.forms import models as model_forms
 from django.utils import timezone
+import json
 
 # import sys
 # reload(sys)
@@ -127,6 +128,7 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
         return super(InvoiceCreateView, self).post(request, *args, **kwargs)
 
     def get_success_url(self, *args, **kwargs):
+        self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
         return reverse("invoice_list", kwargs={}) 
 
     def get_context_data(self, *args, **kwargs):
@@ -151,6 +153,10 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
     def post(self, request, *args, **kwargs):
         context = {}
         if request.is_ajax():
+            print request.POST
+            print type(request.POST)
+            # decode_json = json.loads(datas)
+            # print decode_json
             data = {
                 'total_amount' : 3,
                 'currency' : 'USD',
@@ -170,7 +176,15 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
             # return render(request, 'invoices/invoice_create.html',context)
             # return self.render_to_response(context)
 
-        return self.render_to_response(context)
+        form = self.form_class(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            print form.errors
+
+    def get_success_url(self, *args, **kwargs):
+        self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
+        return reverse("invoice_list", kwargs={}) 
 
 class InvoiceListView(LoginRequiredMixin, ListView): 
     model = Invoice
@@ -183,6 +197,8 @@ class InvoiceListView(LoginRequiredMixin, ListView):
             # initial=[{'use_condition': _('Normal'),}]
             )
         context["formset"] = formset
+
+        self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
 
         return context
 
@@ -204,6 +220,7 @@ class InvoiceListView(LoginRequiredMixin, ListView):
                 obj.total_amount = obj.total_amount + instance.total_amount                              
                 obj.save()
             # messages.success(request, "Your list has been updated.")
+            self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
             return redirect(reverse("invoice_list",  kwargs={}))
             
 
