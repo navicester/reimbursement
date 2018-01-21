@@ -58,10 +58,10 @@ function csrfSafeMethod(method) {
             needResult: 1,
             desc: 'scanQRCode desc',
             success: function (res) {
-                alert(JSON.stringify(res));
+                // alert(JSON.stringify(res));
                 $.ajax({
                     url: "qrscan",
-                    data: JSON.stringify(res),
+                    data: {'resultStr':res.resultStr, 'errMsg':res.errMsg},
                     type: "post",
                     dataType: 'json',
                     beforeSend: function (xhr, settings){
@@ -88,7 +88,7 @@ function csrfSafeMethod(method) {
                             $('textarea#id_comments').val(data.comments);
                         }
                         else{
-                            alert('fail to get')
+                            alert(data.status)
                         }
                     },
                     complete: function () {
