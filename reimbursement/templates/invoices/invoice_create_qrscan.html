@@ -71,20 +71,25 @@ function csrfSafeMethod(method) {
                         }
                     },
                     success: function (data) {
-                        $('input#id_total_amount').val(data.total_amout);
-                        $('select#id_currency').val(data.currency);
-                        $('input#id_base_amount').val(data.base_amount);
-                        $('input#id_VAT_amount').val(data.VAT_amount);
-                        $('input[name="invoice_type"]').each(function(){
-                            if ($(this).val()==data.invoice_type){
-                                $(this).attr('checked', 'checked');                                
-                            }
-                        });
-                        $('input#id_invoice_date').val(data.invoice_date);
-                        $('input#invoice_project').val(data.invoice_project);
-                        $('select#id_invoice_category').val(data.invoice_category);
-                        $('input#id_total_amount').val(data.total_amount);
-                        $('textarea#id_comments').val(data.comments);
+                        if(data.status == 'success'){
+                            $('input#id_total_amount').val(data.total_amout);
+                            $('select#id_currency').val(data.currency);
+                            $('input#id_base_amount').val(data.base_amount);
+                            $('input#id_VAT_amount').val(data.VAT_amount);
+                            $('input[name="invoice_type"]').each(function(){
+                                if ($(this).val()==data.invoice_type){
+                                    $(this).attr('checked', 'checked');                                
+                                }
+                            });
+                            $('input#id_invoice_date').val(data.invoice_date);
+                            $('input#invoice_project').val(data.invoice_project);
+                            $('select#id_invoice_category').val(data.invoice_category);
+                            $('input#id_total_amount').val(data.total_amount);
+                            $('textarea#id_comments').val(data.comments);
+                        }
+                        else{
+                            alert('fail to get')
+                        }
                     },
                     complete: function () {
                      
