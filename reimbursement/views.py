@@ -10,7 +10,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, JsonResponse
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from django.forms.models import modelformset_factory
@@ -147,6 +147,30 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
         context["signPackage"] = api.getSignPackage()
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        if request.is_ajax():
+            data = {
+                'total_amount' : 3,
+                'currency' : 'USD',
+                'base_amount' : 2,
+                'VAT_amount' : 1,
+                'invoice_type' : 'notinvoice',
+                'invoice_date' : '2017-01-01',
+                'invoice_category' : 1,
+                'invoice_project' : 1,
+                'comments' : 1,
+            }
+
+            # context['form'] = self.form_class(initial={
+            #     'total_amount':1,
+            #     })
+            return JsonResponse(data)
+            # return render(request, 'invoices/invoice_create.html',context)
+            # return self.render_to_response(context)
+
+        return self.render_to_response(context)
 
 class InvoiceListView(LoginRequiredMixin, ListView): 
     model = Invoice

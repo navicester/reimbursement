@@ -3,13 +3,34 @@
 
 {% block tpl_content_header %}
 <div class="page">    
-    scran result to be put here!
+    <!-- scran result to be put here! -->
 </div>
 {% endblock %}
 
 <script type="text/javascript" charset="utf-8">
 
 {% block jquery %}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
 
     wx.config({
         debug: false,
@@ -34,11 +55,45 @@
         });
 
         wx.scanQRCode({
-          needResult: 1,
-          desc: 'scanQRCode desc',
-          success: function (res) {
-            alert(JSON.stringify(res));
-          }
+            needResult: 1,
+            desc: 'scanQRCode desc',
+            success: function (res) {
+                // alert(JSON.stringify(res));
+                $.ajax({
+                    url: "qrscan",
+                    data: JSON.stringify(res),
+                    type: "post",
+                    dataType: 'json',
+                    beforeSend: function (xhr, settings){
+                        var csrftoken = getCookie('csrftoken'); 
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    },
+                    success: function (data) {
+                        $('input#id_total_amount').val(data.total_amout);
+                        $('select#id_currency').val(data.currency);
+                        $('input#id_base_amount').val(data.base_amount);
+                        $('input#id_VAT_amount').val(data.VAT_amount);
+                        $('input[name="invoice_type"]').each(function(){
+                            if ($(this).val()==data.invoice_type){
+                                $(this).attr('checked', 'checked');                                
+                            }
+                        });
+                        $('input#id_invoice_date').val(data.invoice_date);
+                        $('input#invoice_project').val(data.invoice_project);
+                        $('select#id_invoice_category').val(data.invoice_category);
+                        $('input#id_total_amount').val(data.total_amount);
+                        $('textarea#id_comments').val(data.comments);
+                    },
+                    complete: function () {
+                     
+                    },
+                    error: function (er) {
+                        alert(er.responseText);
+                    }
+                });
+            }
         });        
     })
 
