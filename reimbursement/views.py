@@ -137,6 +137,7 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
 
         return context
 
+import string
 class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
     template_name = "invoices/invoice_create_qrscan.html"
     model = Invoice
@@ -153,25 +154,32 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
     def post(self, request, *args, **kwargs):
         context = {}
         if request.is_ajax():
-            print request.POST
-            print type(request.POST)
-            # decode_json = json.loads(datas)
-            # print decode_json
+            result = request.POST.get('resultStr')
+            if not result:
+                return self.render_to_response(context)
+                result = '01,10,031001600211,77480574,83.96,20171230,59326830950603727351,09ED'
+            result_list = result.split(',')
+            # 01,10 01,04是普通发票，01,01是专用发票
+            # 031001600211 发票代码
+            # 77480574 发票号码
+            # 83.96 金额
+            # 20171230 开票日期
+            # 59326830950603727351 校验码
+            # 09ED 随机产生的机密信息
+
             data = {
-                'total_amount' : 3,
-                'currency' : 'USD',
-                'base_amount' : 2,
-                'VAT_amount' : 1,
-                'invoice_type' : 'notinvoice',
-                'invoice_date' : '2017-01-01',
+                'base_amount' : result_list[4],  
+                'VAT_amount' : "{:.2f}".format(float(result_list[4])*0.06),                          
+                'total_amount' : "{:.2f}".format(float(result_list[4])*1.06),
+                'currency' : 'RMB',
+                'invoice_type' : 'ordinary' if result_list[0]=='01' and  result_list[1]=='10' else 'special',
+                'invoice_date' : "{0}-{1}-{2}".format(result_list[5][0:4],result_list[5][4:6],result_list[5][6:8]),
+                # 'invoice_date' : result_list[5],
                 'invoice_category' : 1,
                 'invoice_project' : 1,
-                'comments' : 1,
+                'comments' : '',
             }
 
-            # context['form'] = self.form_class(initial={
-            #     'total_amount':1,
-            #     })
             return JsonResponse(data)
             # return render(request, 'invoices/invoice_create.html',context)
             # return self.render_to_response(context)
