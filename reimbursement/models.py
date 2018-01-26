@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save
 from django.conf import settings
+import os
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
 
@@ -17,35 +19,66 @@ def total_amount_saved(sender, instance, *args, **kwargs):
     instance.total_amount = instance.base_amount or 0 + instance.VAT_amount or 0
 
 class Invoice(models.Model):
-    invoice_currency_option = [
-        ('RMB', _('RMB')),
-        ('USD', _('USD')),
-        ('EUR', _('EUR')),
-    ]
+    if not 'SERVER_SOFTWARE' in os.environ:
+        invoice_currency_option = [
+            ('RMB', _('RMB')),
+            ('USD', _('USD')),
+            ('EUR', _('EUR')),
+        ]
 
-    invoice_type_option = [
-        ('ordinary', _('ordinary VAT invoice')),
-        ('special', _('special invoice')),
-        ('notinvoice', _('not invoice')),
-    ]
+        invoice_type_option = [
+            ('ordinary', _('ordinary VAT invoice')),
+            ('special', _('special invoice')),
+            ('notinvoice', _('not invoice')),
+        ]
 
-    invoice_category_option = [
-        ('1', _('Operation')),
-        ('2', _('Market')),
-        ('3', _('R&D')),
-    ]
+        invoice_category_option = [
+            ('1', _('Operation')),
+            ('2', _('Market')),
+            ('3', _('R&D')),
+        ]
 
-    invoice_project_option = [
-        ('1', _('Meals')),
-        ('2', _('Rent')),
-        ('3', _('Travel')),
-    ] 
+        invoice_project_option = [
+            ('1', _('Meals')),
+            ('2', _('Rent')),
+            ('3', _('Travel')),
+        ] 
 
-    invoice_status_option = [
-        ('notsubmitted', _('not submitted')),
-        ('inprogress', _('in progress')),
-        ('approved', _('approved')),
-    ] 
+        invoice_status_option = [
+            ('notsubmitted', _('not submitted')),
+            ('inprogress', _('in progress')),
+            ('approved', _('approved')),
+        ] 
+    else:
+        invoice_currency_option = [
+            ('RMB', '人民币'),
+            ('USD', '美元'),
+            ('EUR', '欧元'),
+        ]
+
+        invoice_type_option = [
+            ('ordinary', _('ordinary VAT invoice')),
+            ('special', _('special invoice')),
+            ('notinvoice', _('not invoice')),
+        ]
+
+        invoice_category_option = [
+            ('1', _('Operation')),
+            ('2', _('Market')),
+            ('3', _('R&D')),
+        ]
+
+        invoice_project_option = [
+            ('1', _('Meals')),
+            ('2', _('Rent')),
+            ('3', _('Travel')),
+        ] 
+
+        invoice_status_option = [
+            ('notsubmitted', _('not submitted')),
+            ('inprogress', _('in progress')),
+            ('approved', _('approved')),
+        ] 
 
     total_amount = models.DecimalField(_('total amount'), decimal_places=2, max_digits=20, blank=False, null=False)
     currency = models.CharField(_('currency'), choices=invoice_currency_option,max_length=30,blank=False, null=False)
