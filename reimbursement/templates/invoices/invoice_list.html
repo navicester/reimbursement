@@ -6,12 +6,12 @@
 {% block tpl_content %}
 <div class="page" style="padding: 0 5px 0 5px ">
     <div class="page__hd">
-        <h3 style="color: red;" class="page__title">&nbsp;未提交发票</h3>
+        <h3 style="color: red; text-align: center;padding: 5px 5px" class="page__title">&nbsp;未提交发票</h3>
         <!-- <p class="page__desc">&nbsp;&nbsp;勾选相应发票去提交</p> -->
     </div>
     <div class="page__bd">
         {% if not formset or not formset.queryset.count %}
-            {% trans "No unsumbitted invoice" %}
+            {# trans "No unsumbitted invoice" #}没有未提交发票
         {% else%}
         <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
             <div class="weui-cells__title">选择要提交费用</div>

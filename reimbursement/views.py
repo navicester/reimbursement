@@ -45,7 +45,7 @@ except ImportError:
     from PIL import Image
 
 import pytesseract
-pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract'
+pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract'
 
 def decodeTrainInvoice():
     path = os.path.join(settings.MEDIA_ROOT,"20170730090411.png")
@@ -320,3 +320,29 @@ class ApplicationToMeListView(LoginRequiredMixin, ListView):
         context["object_list_rejected"] = None if not rejected_record_list else [obj.reimbursement_request for obj in rejected_record_list ]
 
         return context        
+
+def imgge_ajax_upload(request):
+    import base64, os
+    print 'request.POST'
+    print request.POST
+    print request.POST.get('pic',None)
+    print 'request.FILES'
+    print request.FILES
+    if request.is_ajax():
+        length = request.POST.get('length',None)
+        if length:
+            for i in range(int(length)):
+                print i
+                image_str = request.POST.get('pic[{0}][pic]'.format(i), None)
+                image_name = request.POST.get('pic[{0}][pic_name]'.format(i), None)
+                if image_str and image_name:
+                    imgdata=base64.b64decode(image_str) 
+                    photopath = os.path.join(settings.MEDIA_ROOT, 'upload')
+                    if not os.path.exists(photopath):
+                        os.makedirs(photopath)
+                    filepath = os.path.join(photopath, image_name)
+                    file=open(filepath,'wb')  
+                    file.write(imgdata)  
+                    file.close()  
+        return JsonResponse({'status':'fail'})
+    return render(request,'test_image_ajax_upload.html',{'form':InvoiceImageForm})

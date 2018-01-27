@@ -19,7 +19,7 @@ def total_amount_saved(sender, instance, *args, **kwargs):
     instance.total_amount = instance.base_amount or 0 + instance.VAT_amount or 0
 
 class Invoice(models.Model):
-    if not 'SERVER_SOFTWARE' in os.environ:
+    if 1:
         invoice_currency_option = [
             ('RMB', _('RMB')),
             ('USD', _('USD')),
@@ -127,7 +127,7 @@ class Invoice(models.Model):
 pre_save.connect(total_amount_saved, sender=Invoice)
 
 class ReimbusementRequest(models.Model):
-    if not 'SERVER_SOFTWARE' in os.environ:
+    if 1:
         reimbursement_status_option = [
             ('inprogress', _('in progress')),
             ('approved', _('approved')),
@@ -185,7 +185,7 @@ class ApprovalChain(models.Model):
         return "{0}".format(self.current_approver)
 
 class ApprovalRecord(models.Model):
-    if not 'SERVER_SOFTWARE' in os.environ:
+    if 1: #not 'SERVER_SOFTWARE' in os.environ:
         reimbursement_status_option = [
             ('inprogress', _('in progress')),
             ('approved', _('approved')),
@@ -197,7 +197,7 @@ class ApprovalRecord(models.Model):
             ('approved', '已批准'),
             ('rejected', '已拒绝'),        
         ] 
-        
+
     approver = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('approver'),blank=False, null=False)    
     status = models.CharField(_('reimbursement status'), choices=reimbursement_status_option, max_length=30, blank=True, null=True, default="inprogress")
     comments = models.CharField(_('approve comments'), max_length=30, blank=True, null=True)

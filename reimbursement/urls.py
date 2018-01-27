@@ -19,7 +19,10 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from reimbursement.views import (home, 
+from reimbursement.views import (
+    home, 
+    imgge_ajax_upload,
+    
     InvoiceCreateView, 
     InvoiceDetailView,
     ApplicationHistoryDetailView,
@@ -39,6 +42,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^home', home, name="home"),
+    url(r'^test',imgge_ajax_upload,name='test'),
     url(r'^$', home, name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
     url(r'^invoices/(?P<pk>\d+)$', InvoiceDetailView.as_view(), name='invoice_detail'),

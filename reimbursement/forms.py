@@ -112,9 +112,9 @@ class InvoiceForm(forms.ModelForm):
             "weui-input" if not self.fields['VAT_amount'].widget.attrs.get("class") \
             else self.fields['VAT_amount'].widget.attrs.get("class") + " weui-input"
 
-        self.fields['image'].widget.attrs['class'] = \
-            "weui-uploader__input" if not self.fields['image'].widget.attrs.get("class") \
-            else self.fields['image'].widget.attrs.get("class") + " weui-uploader__input"
+        # self.fields['image'].widget.attrs['class'] = \
+        #     "weui-uploader__input" if not self.fields['image'].widget.attrs.get("class") \
+        #     else self.fields['image'].widget.attrs.get("class") + " weui-uploader__input"
 
         # self.fields['end'].widget.attrs['class'] ="calenda"
 
