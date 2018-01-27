@@ -96,9 +96,10 @@ class Invoice(models.Model):
     def __unicode__(self): 
         if self.id:
             print self.my_get_field_display('invoice_category')
-            return "IV{0:0>5d}".format(self.id) + "-" + \
-                self.my_get_field_display('invoice_category') + "-" +\
-                self.my_get_field_display('invoice_project') + "-" + "{0}".format(self.total_amount)
+            return "IV{0:0>5d}".format(self.id)
+            # return "IV{0:0>5d}".format(self.id) + "-" + \
+            #     self.my_get_field_display('invoice_category') + "-" +\
+            #     self.my_get_field_display('invoice_project') + "-" + "{0}".format(self.total_amount)
             # return "IV{0:0>5d}-{1}-{2}".format(self.id, self.my_get_field_display('invoice_category'), \
                 # self.my_get_field_display('invoice_project'))            
         else:
