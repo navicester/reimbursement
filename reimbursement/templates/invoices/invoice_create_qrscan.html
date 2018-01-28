@@ -88,14 +88,14 @@ function csrfSafeMethod(method) {
                             $('textarea#id_comments').val(data.comments);
                         }
                         else{
-                            alert(data.status)
+                            // alert(data.status)
                         }
                     },
                     complete: function () {
                      
                     },
                     error: function (er) {
-                        alert(er.responseText);
+                        // alert(er.responseText);
                     }
                 });
             }

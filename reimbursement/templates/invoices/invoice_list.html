@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 {% load staticfiles %}
+{% load pagination_tags %}
 
 {% block tpl_content %}
 
@@ -10,6 +11,7 @@
     <div class="weui-cells__title">所有发票</div>
     <div class="weui-cells">
 
+        {% autopaginate object_list 10 %}
         {% for object in object_list %}
         <a class="weui-cell weui-cell_access" style="background-color: #ececec; border-radius: 3px; margin: 5px 2px 5px 2px;" href="{{ object.get_absolute_url }}">
             <div class="weui-cell__hd"><img src="{% static 'images/icon_nav_form.png' %}" alt="" style="width:20px;margin-right:5px;display:block"></div>
@@ -17,11 +19,29 @@
                 <p>{{object}}</p>
             </div>
             <div class="weui-cell__ft">查看</div>
-        </a>
-        
+        </a>        
         {% endfor %}
+        <div class="text-center">
+        {% paginate %}
+        </div>          
     </div>
 </div>
 
+<div class="page button js_show">
+<!--     <div class="page__hd">
+        <h1 class="page__title">Button</h1>
+        <p class="page__desc">按钮</p>
+    </div> -->
+    <div class="page__bd page__bd_spacing" style="padding-left: 5px;">
+        <div class="button-sp-area">
+            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">下载</a>
+            <a href="{% url 'invoice_list_notsubmitted' %}" class="weui-btn weui-btn_mini weui-btn_default">未提交</a>
+            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">返回</a>
+        </div>
+    </div>
+    <div class="page__ft">
+        <!-- <a href="javascript:home()"><img src="./images/icon_footer_link.png"></a> -->
+    </div>
+</div>
 
 {% endblock %}

@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from reimbursement.views import (
     home, 
+    company, 
     imgge_ajax_upload,
     
     InvoiceCreateView, 
@@ -55,7 +56,8 @@ urlpatterns = [
     url(r'^applications/$', ApplicationListView.as_view(), name='application_list'),    
     url(r'^applications/fromme/$', ApplicationFromMeListView.as_view(), name='application_from_me_list'),
     url(r'^applications/tome/$', ApplicationToMeListView.as_view(), name='application_to_me_list'),
-    url(r'^accounts/', include('registration.backends.default.urls')),        
+    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^company/', company, name="company"),
 ]
 
 import os

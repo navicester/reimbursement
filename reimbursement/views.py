@@ -371,3 +371,6 @@ def imgge_ajax_upload(request):
                     file.close()  
         return JsonResponse({'status':'fail'})
     return render(request,'test_image_ajax_upload.html',{'form':InvoiceImageForm})
+
+def company(request):
+    return render(request,'company/company.html',{})    

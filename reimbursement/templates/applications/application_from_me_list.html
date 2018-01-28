@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load staticfiles %}
 {% load myform %}
+{% load pagination_tags %}
 
 {% block tpl_navbar %}
 {% endblock %}
@@ -12,6 +13,7 @@
     <div class="weui-cells__title" >已提交申请</div>
     <div class="weui-cells">
 
+        {% autopaginate object_list 10 %}
     	{% for object in object_list %}
         <a class="weui-cell weui-cell_access title_list" href="{{ object.get_absolute_url_history }}">
             <div class="weui-cell__hd"><img src="{% static 'images/icon_nav_form.png' %}" alt="" style="width:20px;margin-right:5px;display:block"></div>
@@ -19,9 +21,11 @@
                 <p>{{object}}</p>
             </div>
             <div class="weui-cell__ft">查看</div>
-        </a>
-        
+        </a>        
         {% endfor %}
+        <div class="text-center">
+        {% paginate %}
+        </div>        
     </div>
 </div>
 {% endblock %}

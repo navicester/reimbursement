@@ -65,14 +65,14 @@
             <div class="page__bd" style="height: 100%;">
                 <div class="weui-tab">
                     <div class="weui-navbar" style="position: fixed;" >
-                        <div class="weui-navbar__item {% if create_view == 'Create' %}weui-bar__item_on {% endif %}"> 
-                            <a style="display:block;" href="{% url 'invoice_create' %}">普通录入</a>
+                        <div class="weui-navbar__item {% if create_view == 'Create' %}weui-bar__item_on {% endif %}">                             
+                            <a style="display:block;" href="{% url 'invoice_create' %}"><i class="fa fa-2x fa-inbox" aria-hidden="true" style="width:20px;margin-right:5px;color:red;"></i><br>普通录入</a>
                         </div>
-                        <div class="weui-navbar__item {% if create_view == 'CreateScan' %}weui-bar__item_on" {% endif %}">
-                            <a style="display:block;" href="{% url 'invoice_create_qrscan' %}">扫描录入</a>
+                        <div class="weui-navbar__item {% if create_view == 'CreateScan' %}weui-bar__item_on" {% endif %}">                            
+                            <a style="display:block;" href="{% url 'invoice_create_qrscan' %}"><i class="fa fa-2x fa-camera" aria-hidden="true" style="width:20px;margin-right:5px;color:green;"></i><br>扫描录入</a>
                         </div>
-                        <div class="weui-navbar__item {% if create_view == 'OCR' %}weui-bar__item_on" {% endif %}">
-                            <a style="display:block;" href="{% url 'home' %}">OCR识别</a>                            
+                        <div class="weui-navbar__item {% if create_view == 'OCR' %}weui-bar__item_on" {% endif %}">                            
+                            <a style="display:block;" href="{% url 'home' %}"><i class="fa fa-2x fa-image" aria-hidden="true" style="width:20px;margin-right:5px;color:blue;"></i><br>OCR识别</a>                            
                         </div>
                     </div>
                     <div class="weui-tab__panel">
@@ -84,8 +84,8 @@
     </script>
     {% endblock %}
 
-    
-    <div class="container" id="container">
+    <br>
+    <div class="container" id="container" style="clear: both;">
     {% block tpl_content %}
         <div class="page">
             <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
@@ -110,7 +110,7 @@
                     </div>
                     <div class="weui-tabbar" style="position: fixed;">
                         <!-- <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on"> -->
-                        <a href="{% url 'invoice_list' %}" class="weui-tabbar__item weui-bar__item_on">
+                        <a href="{% url 'invoice_list_notsubmitted' %}" class="weui-tabbar__item weui-bar__item_on">
                             <span style="display: inline-block;position: relative;">
                                 <img src="{% static 'images/icon_tabbar.png' %}" alt="" class="weui-tabbar__icon">
                                 {% if request.session.invoice_list_count%}<span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">{{request.session.invoice_list_count}}</span>{% endif %}
@@ -128,7 +128,7 @@
                             </span>
                             <p class="weui-tabbar__label">待办</p>
                         </a>
-                        <a href="javascript:;" class="weui-tabbar__item">
+                        <a href="{% url 'company' %}" class="weui-tabbar__item">
                             <img src="{% static 'images/icon_tabbar.png' %}" alt="" class="weui-tabbar__icon">
                             <p class="weui-tabbar__label">企业</p>
                         </a>
