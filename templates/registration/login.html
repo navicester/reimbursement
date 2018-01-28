@@ -7,6 +7,10 @@
 
 {% block tpl_content %}
 <div class="page">
+        {% if request.user.is_anonymous and request.wechat %}
+            You need to login to continue
+        {% endif %}
+            
     <form method="post" action="">{% csrf_token %}
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
@@ -33,7 +37,11 @@
         <p class="weui-footer__links">
             <a href="{% url 'register_phone' %}" class="weui-footer__link">注册</a>
         </p>
+        <br>
+        <a href='{% url "wechatlogin" %}'><i class="fa fa-2x fa-weixin" aria-hidden="true"></i></a>
     </div>
+
+
 
     <div class = "row">
         <div class = "col-sm-3 col-sm-offset-3">
