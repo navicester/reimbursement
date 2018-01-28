@@ -4,36 +4,24 @@
 {% load staticfiles %}
 
 {% block tpl_content %}
-<div class="page" style="padding: 0 5px 0 5px ">
-    <div class="page__hd">
-        <h3 style="color: red; text-align: center;padding: 5px 5px" class="page__title">&nbsp;未提交发票</h3>
-        <!-- <p class="page__desc">&nbsp;&nbsp;勾选相应发票去提交</p> -->
-    </div>
-    <div class="page__bd">
-        {% if not formset or not formset.queryset.count %}
-            {# trans "No unsumbitted invoice" #}没有未提交发票
-        {% else%}
-        <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
-            <div class="weui-cells__title">选择要提交费用</div>
-            <div class="weui-cells weui-cells_checkbox">
-                {{ formset.management_form }}
-                {{formset0}}
-                {% for form in formset %}
-                <label class="weui-cell weui-check__label" for="id_form-{{forloop.counter0}}-{{form.is_submit.name}}">
-                    <div class="weui-cell__hd">
-                        <input type="checkbox" class="weui-check" name="form-{{forloop.counter0}}-{{form.is_submit.name}}" id="id_form-{{forloop.counter0}}-{{form.is_submit.name}}" checked="checked"/>
-                        <i class="weui-icon-checked"></i>
-                    </div>
-                    <div class="weui-cell__bd">
-                        <p>{{form.instance}}</p><a href="{% url 'invoice_list' %}"></a>
-                    </div>
-                </label>
-                <input id="id_form-{{forloop.counter0}}-id" name="form-{{forloop.counter0}}-id" type="hidden" value="{{form.instance.pk}}" />
-                {% endfor %}
+
+<div class="page">    
+
+    <div class="weui-cells__title">所有发票</div>
+    <div class="weui-cells">
+
+        {% for object in object_list %}
+        <a class="weui-cell weui-cell_access" style="background-color: #ececec; border-radius: 3px; margin: 5px 2px 5px 2px;" href="{{ object.get_absolute_url }}">
+            <div class="weui-cell__hd"><img src="{% static 'images/icon_nav_form.png' %}" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__bd">
+                <p>{{object}}</p>
             </div>
-            <input type="submit" class="weui-btn weui-btn_primary"value="提交审批"/>
-        </form>
-        {% endif %}
+            <div class="weui-cell__ft">查看</div>
+        </a>
+        
+        {% endfor %}
     </div>
 </div>
+
+
 {% endblock %}

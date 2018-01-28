@@ -1,8 +1,37 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load myform %}
 
 {% block tpl_content %}
 <div class="page">
-    {{object}}
+    <div class="page__hd">
+        <p class="page__desc title_header" style="padding:15px 15px;">查看发票详情</p>
+    </div>
+    <div class="page__bd">
+        <div class="weui-form-preview">         
+            <div class="weui-form-preview__hd">
+                <label class="weui-form-preview__label">发票金额</label>
+                <em class="weui-form-preview__value">{{invoice.total_amount}}</em>
+            </div>
+            <div class="weui-form-preview__bd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">发票种类</label>
+                    <span class="weui-form-preview__value">{{invoice|my_get_field_display:'invoice_type'}}</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">发票日期</label>
+                    <span class="weui-form-preview__value">{{invoice.invoice_date}}</span>
+                </div>
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label">发票日备注</label>
+                    <span class="weui-form-preview__value">{{invoice.comments}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page__ft">
+        <!-- <a href="javascript:home()"><img src="./images/icon_footer_link.png" /></a> -->
+        <!-- <input type="submit" class="weui-btn weui-btn_primary"value="批准"/>    -->
+    </div>
 </div>
 {% endblock %}

@@ -32,8 +32,30 @@
         color:black;
     }
 
-    </style>
+    div.weui-navbar div.weui-bar__item_on{
+        /*background-color: red;*/
+    }
+
+    div.weui-navbar div.weui-navbar__item a{
+        font-size: 15px;
+        /*font-family: 黑体;*/
+        /*font-weight:bold;*/
+        color: #4e8fc8;
+    }   
+
+    div.weui-navbar div.weui-bar__item_on a{
+        /*color:white;*/
+        
+    }    
+
+    /*overwrite*/
+/*    .weui-navbar__item.weui-bar__item_on {
+        background:linear-gradient(rgba(124, 152, 177, 0.88), #428bca); 
+    }*/
+
     {% endblock%}
+    </style>
+
 </head>
 <body ontouchstart>
 
@@ -43,13 +65,13 @@
             <div class="page__bd" style="height: 100%;">
                 <div class="weui-tab">
                     <div class="weui-navbar" style="position: fixed;" >
-                        <div class="weui-navbar__item weui-bar__item_on">
+                        <div class="weui-navbar__item {% if create_view == 'Create' %}weui-bar__item_on {% endif %}"> 
                             <a style="display:block;" href="{% url 'invoice_create' %}">普通录入</a>
                         </div>
-                        <div class="weui-navbar__item">
+                        <div class="weui-navbar__item {% if create_view == 'CreateScan' %}weui-bar__item_on" {% endif %}">
                             <a style="display:block;" href="{% url 'invoice_create_qrscan' %}">扫描录入</a>
                         </div>
-                        <div class="weui-navbar__item">
+                        <div class="weui-navbar__item {% if create_view == 'OCR' %}weui-bar__item_on" {% endif %}">
                             <a style="display:block;" href="{% url 'home' %}">OCR识别</a>                            
                         </div>
                     </div>

@@ -2,7 +2,19 @@
 {% load crispy_forms_tags %}
 {% load myform %}
 
+<style type="text/css">
+{% block style %}
+{{ block.super }}
+
+div#history .weui-panel{
+    border-top: 5px none white!important;
+}
+{% endblock %}
+
+</style>
+
 {% block application_operation %}
+    <div id='history'>
         <div class="weui-panel weui-panel_access">
             <div class="weui-panel__hd">审批历史</div>
             <div class="weui-panel__bd">
@@ -24,5 +36,6 @@
                     <span class="weui-cell__ft"></span>
                 </a>    
             </div>
-        </div>   
+        </div>  
+    </div> 
 {% endblock %}

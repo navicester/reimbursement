@@ -17,6 +17,7 @@ from django.forms.models import modelformset_factory
 from django.forms import models as model_forms
 from django.utils import timezone
 import json
+from .utils import gen_csv
 
 # import sys
 # reload(sys)
@@ -59,6 +60,7 @@ def home(request):
     #context['form'] = model_forms.modelform_factory(InvoiceImage,fields = ['image'])
     form = InvoiceImageForm()
     context['form'] = form
+    context['create_view'] = 'OCR'
     #decodeTrainInvoice()
    
     if request.method == "POST":
@@ -77,6 +79,7 @@ def home(request):
 
     fencoding = chardet.detect(s)
 
+    # Re Search
     #非ansi
     re_words=re.compile(r"[\x80-\xff]+")
     m =  re_words.search(s,0)            
@@ -129,11 +132,12 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self, *args, **kwargs):
         self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
-        return reverse("invoice_list", kwargs={}) 
+        return reverse("invoice_list_notsubmitted", kwargs={}) 
 
     def get_context_data(self, *args, **kwargs):
         context = super(InvoiceCreateView, self).get_context_data(*args, **kwargs)
         context["today"] = timezone.now().strftime('%Y-%m-%d')
+        context['create_view'] = 'Create'
 
         return context
 
@@ -148,6 +152,7 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
         from wechat.client import WechatAPI
         api = WechatAPI(request = self.request)
         context["signPackage"] = api.getSignPackage()
+        context['create_view'] = 'CreateScan'
 
         return context
 
@@ -197,14 +202,14 @@ class InvoiceCreateQRScanView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self, *args, **kwargs):
         self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
-        return reverse("invoice_list", kwargs={}) 
+        return reverse("invoice_list_notsubmitted", kwargs={}) 
 
-class InvoiceListView(LoginRequiredMixin, ListView): 
+class InvoiceNotSubmittedListView(LoginRequiredMixin, ListView): 
     model = Invoice
-    template_name = "invoices/invoice_list.html"
+    template_name = "invoices/invoice_list_notsubmitted.html"
 
     def get_context_data(self, *args, **kwargs):
-        context = super(InvoiceListView, self).get_context_data(*args, **kwargs)
+        context = super(InvoiceNotSubmittedListView, self).get_context_data(*args, **kwargs)
         context["objects"] = self.model.objects.all()
         formset = InvoiceModelFormset(queryset=self.model.objects.filter(invoice_status='notsubmitted'),
             # initial=[{'use_condition': _('Normal'),}]
@@ -234,13 +239,34 @@ class InvoiceListView(LoginRequiredMixin, ListView):
                 obj.save()
             # messages.success(request, "Your list has been updated.")
             self.request.session["invoice_list_count"] = Invoice.objects.filter(invoice_status="notsubmitted").count()
-            return redirect(reverse("invoice_list",  kwargs={}))
+            return redirect(reverse("invoice_list_notsubmitted",  kwargs={}))
             
 
         self.object_list = self.get_queryset() # copy from BaseListView::get
         context = self.get_context_data()
         context['formset'] = formset
         return self.render_to_response(context)
+
+class InvoiceListView(LoginRequiredMixin, ListView): 
+    model = Invoice
+    template_name = "invoices/invoice_list.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(InvoiceListView, self).get_context_data(*args, **kwargs)
+        context["objects"] = self.model.objects.all()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        qs = self.get_queryset()
+
+        fields_display = [ "currency", ]
+        fields_fk = ["reimbursement_request", "invoice_type", "invoice_category", "invoice_project", "invoice_status" ]
+        fields_datetime = ["invoice_date", ]
+        excludes = ["",]
+        
+        return gen_csv(self.model, qs, "invoice_export.csv", fields_display, fields_fk, fields_datetime, excludes)
 
 class ApplicationListView(ListView): 
     model = ReimbusementRequest

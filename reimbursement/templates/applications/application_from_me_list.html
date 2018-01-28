@@ -9,11 +9,11 @@
 {% block tpl_content %}
 <div class="page">    
 
-    <div class="weui-cells__title">已提交申请</div>
+    <div class="weui-cells__title" >已提交申请</div>
     <div class="weui-cells">
 
     	{% for object in object_list %}
-        <a class="weui-cell weui-cell_access" style="background-color: #ececec; border-radius: 3px; margin: 5px 2px 5px 2px;" href="{{ object.get_absolute_url_history }}">
+        <a class="weui-cell weui-cell_access title_list" href="{{ object.get_absolute_url_history }}">
             <div class="weui-cell__hd"><img src="{% static 'images/icon_nav_form.png' %}" alt="" style="width:20px;margin-right:5px;display:block"></div>
             <div class="weui-cell__bd">
                 <p>{{object}}</p>

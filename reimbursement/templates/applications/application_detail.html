@@ -4,46 +4,46 @@
 
 {% block tpl_content %}
 <div class="page">
-	<form id="form_approve" class="form-horizontal" enctype="multipart/form-data" method="post" action='' >{% csrf_token %}
-	    <div class="page__hd">
-	        <h1 class="page__title">&nbsp;发票列表</h1>
-	        <p class="page__desc">&nbsp;&nbsp;查看发票详情</p>
-	    </div>
-	    <div class="page__bd">
-	        <div class="weui-form-preview">
-	    	{% for invoice in object.invoice_set.all %}          	
-	            <div class="weui-form-preview__hd">
-	                <label class="weui-form-preview__label">发票金额</label>
-	                <em class="weui-form-preview__value">{{invoice.total_amount}}</em>
-	            </div>
-	            <div class="weui-form-preview__bd">
-	                <div class="weui-form-preview__item">
-	                    <label class="weui-form-preview__label">发票种类</label>
-	                    <span class="weui-form-preview__value">{{invoice|my_get_field_display:'invoice_type'}}</span>
-	                </div>
-	                <div class="weui-form-preview__item">
-	                    <label class="weui-form-preview__label">发票日期</label>
-	                    <span class="weui-form-preview__value">{{invoice.invoice_date}}</span>
-	                </div>
-	                <div class="weui-form-preview__item">
-	                    <label class="weui-form-preview__label">发票日备注</label>
-	                    <span class="weui-form-preview__value">{{invoice.comments}}</span>
-	                </div>
-	            </div>
-	        {% endfor %}  
-	        </div>
-	        {% block application_operation %}
-	        <div class="weui-form-preview__ft">
-	        	<input id="approve_action" type="hidden" name="action" value="approved">
-	            <a class="weui-form-preview__btn weui-form-preview__btn_default"  href="#" onclick="calc_total_amout()">拒绝</a>
-	            <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">同意</button>                
-	        </div>    
-	        {% endblock %}
-	    </div>
-	    <div class="page__ft">
-	        <!-- <a href="javascript:home()"><img src="./images/icon_footer_link.png" /></a> -->
-	        <!-- <input type="submit" class="weui-btn weui-btn_primary"value="批准"/>    -->
-	    </div>
+    <form id="form_approve" class="form-horizontal" enctype="multipart/form-data" method="post" action='' >{% csrf_token %}
+        <div class="page__hd">
+            <h1 class="page__title title_header">查看发票详情&nbsp;</h1>
+            <!-- <p class="page__desc">&nbsp;&nbsp;查看发票详情</p> -->
+        </div>
+        <div class="page__bd">
+            <div class="weui-form-preview">
+            {% for invoice in object.invoice_set.all %}              
+                <div class="weui-form-preview__hd">
+                    <label class="weui-form-preview__label">发票金额</label>
+                    <em class="weui-form-preview__value">{{invoice.total_amount}}</em>
+                </div>
+                <div class="weui-form-preview__bd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">发票种类</label>
+                        <span class="weui-form-preview__value">{{invoice|my_get_field_display:'invoice_type'}}</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">发票日期</label>
+                        <span class="weui-form-preview__value">{{invoice.invoice_date}}</span>
+                    </div>
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">发票日备注</label>
+                        <span class="weui-form-preview__value">{{invoice.comments}}</span>
+                    </div>
+                </div>
+            {% endfor %}  
+            </div>
+            {% block application_operation %}
+            <div class="weui-form-preview__ft">
+                <input id="approve_action" type="hidden" name="action" value="approved">
+                <a class="weui-form-preview__btn weui-form-preview__btn_default"  href="#" onclick="calc_total_amout()">拒绝</a>
+                <button type="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">同意</button>                
+            </div>    
+            {% endblock %}
+        </div>
+        <div class="page__ft">
+            <!-- <a href="javascript:home()"><img src="./images/icon_footer_link.png" /></a> -->
+            <!-- <input type="submit" class="weui-btn weui-btn_primary"value="批准"/>    -->
+        </div>
     </form>
 
 </div>
@@ -53,8 +53,8 @@
 {% block js %}
 
     function calc_total_amout(){
-    	$("#approve_action").val("rejected");
-    	$("#form_approve").submit();
+        $("#approve_action").val("rejected");
+        $("#form_approve").submit();
     }
 
 {% endblock%}

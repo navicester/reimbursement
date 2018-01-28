@@ -1,0 +1,14 @@
+.title_header{
+    background:linear-gradient(rgba(124, 152, 177, 0.88), #428bca); 
+    border-radius: 3px; 
+    padding: 2px 2px 2px 12px;
+    color:white;
+}
+
+.title_list{
+    /*background:linear-gradient(rgba(124, 152, 177, 0.88), #428bca); */
+    background-color: #EAEAEA;
+    border-radius: 3px; 
+    margin: 5px 2px 5px 2px;
+    /*color:white;*/
+}

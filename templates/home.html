@@ -3,14 +3,22 @@
 
 {% block tpl_content %}
     <div class="page">
-        <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
-            {{form}}
-            <input type="submit" class="weui-btn weui-btn_primary"value="提交"/>
-        </form>
-        
-        <div class="weui-cells__title">输出结果</div>
-            output : {{output}} <br>
-            output2 : {{output2}}
+        <div class="page__hd">
+            <h2 class="page__title title_header"><small>OCR扫描&nbsp;</small></h2>
+            <p class="page__desc">选择要识别的图片&nbsp;&nbsp;</p>
+        </div>
+        <div class="page__bd">        
+            <form class="form-horizontal" enctype="multipart/form-data" method="POST" action='' >{% csrf_token %}
+                {{form}}
+                <input type="submit" class="weui-btn weui-btn_primary"value="提交"/>
+            </form>
+            
+            <div class="weui-cells__title">输出结果</div>
+                输出1 : {{output}} <br>
+                {% if output2 %}
+                输出2 : {{output2}}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
