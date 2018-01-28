@@ -20,65 +20,65 @@ def total_amount_saved(sender, instance, *args, **kwargs):
 
 class Invoice(models.Model):
 
-    invoice_currency_option = [
-        ('RMB', _('RMB')),
-        ('USD', _('USD')),
-        ('EUR', _('EUR')),
-    ]
-
-    invoice_type_option = [
-        ('ordinary', _('ordinary VAT invoice')),
-        ('special', _('special invoice')),
-        ('notinvoice', _('not invoice')),
-    ]
-
-    invoice_category_option = [
-        ('1', _('Operation')),
-        ('2', _('Market')),
-        ('3', _('R&D')),
-    ]
-
-    invoice_project_option = [
-        ('1', _('Meals')),
-        ('2', _('Rent')),
-        ('3', _('Travel')),
-    ] 
-
-    invoice_status_option = [
-        ('notsubmitted', _('not submitted')),
-        ('inprogress', _('in progress')),
-        ('approved', _('approved')),
-    ] 
-
     # invoice_currency_option = [
-    #     ('RMB', '人民币'),
-    #     ('USD', '美元'),
-    #     ('EUR', '欧元'),
+    #     ('RMB', _('RMB')),
+    #     ('USD', _('USD')),
+    #     ('EUR', _('EUR')),
     # ]
 
     # invoice_type_option = [
-    #     ('ordinary', '普票'),
-    #     ('special', '专票'),
-    #     ('notinvoice', '非发票'),
+    #     ('ordinary', _('ordinary VAT invoice')),
+    #     ('special', _('special invoice')),
+    #     ('notinvoice', _('not invoice')),
     # ]
 
     # invoice_category_option = [
-    #     ('1', '运营'),
-    #     ('2', '市场'),
-    #     ('3', '研发'),
+    #     ('1', _('Operation')),
+    #     ('2', _('Market')),
+    #     ('3', _('R&D')),
     # ]
 
     # invoice_project_option = [
-    #     ('1', '餐饮'),
-    #     ('2', '房租'),
-    #     ('3', '出差'),
+    #     ('1', _('Meals')),
+    #     ('2', _('Rent')),
+    #     ('3', _('Travel')),
     # ] 
 
     # invoice_status_option = [
-    #     ('notsubmitted', '未提交'),
-    #     ('inprogress', '处理中'),
-    #     ('approved', '已批准'),
+    #     ('notsubmitted', _('not submitted')),
+    #     ('inprogress', _('in progress')),
+    #     ('approved', _('approved')),
     # ] 
+
+    invoice_currency_option = [
+        ('RMB', u'人民币'),
+        ('USD', u'美元'),
+        ('EUR', u'欧元'),
+    ]
+
+    invoice_type_option = [
+        ('ordinary', u'普票'),
+        ('special', u'专票'),
+        ('notinvoice', u'非发票'),
+    ]
+
+    invoice_category_option = [
+        ('1', u'运营'),
+        ('2', u'市场'),
+        ('3', u'研发'),
+    ]
+
+    invoice_project_option = [
+        ('1', u'餐饮'),
+        ('2', u'房租'),
+        ('3', u'出差'),
+    ] 
+
+    invoice_status_option = [
+        ('notsubmitted', u'未提交'),
+        ('inprogress', u'处理中'),
+        ('approved', u'已批准'),
+    ] 
 
     total_amount = models.DecimalField(_('total amount'), decimal_places=2, max_digits=20, blank=False, null=False)
     currency = models.CharField(_('currency'), choices=invoice_currency_option,max_length=30,blank=False, null=False)
