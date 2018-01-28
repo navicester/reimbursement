@@ -16,7 +16,7 @@
         {% autopaginate object_list 10 %}
     	{% for object in object_list %}
         <a class="weui-cell weui-cell_access title_list" href="{{ object.get_absolute_url_history }}">
-            <div class="weui-cell__hd"><img src="{% static 'images/icon_nav_form.png' %}" alt="" style="width:20px;margin-right:5px;display:block"></div>
+            <div class="weui-cell__hd">{% if object.status == "approved" %}<i class="weui-icon-success"></i>{% elif object.status == "rejected" %}<i class="weui-icon-warn"></i>{% else %}<i class="weui-icon-waiting"></i>{% endif %}<!-- <img src="{% static 'images/icon_nav_form.png' %}" alt="" style="width:20px;margin-right:5px;display:block"> --></div>
             <div class="weui-cell__bd">
                 <p>{{object}}</p>
             </div>

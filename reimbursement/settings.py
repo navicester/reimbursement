@@ -173,3 +173,4 @@ AUTH_USER_MODEL = 'authwrapper.MyUser'
 ACCOUNT_ALLOW_MIX_TYPE_LOGIN = True
 
 ACCOUNT_REGISTER_TYPE =  'mail' #phone, 'mail',
+UUSLUGIFY = True

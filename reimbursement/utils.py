@@ -5,7 +5,8 @@ from django.utils.encoding import force_str, force_text
 from django.db import models
 
 def gen_csv(model, qs, filename, fields_display, fields_fk, fields_datetime, excludes, fields_multiple=None):
-        response = HttpResponse(content_type='text/csv')        
+        response = HttpResponse()
+        # response = HttpResponse(content_type='"application/x-javascript') 
         response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
         response.write(codecs.BOM_UTF8) # add bom header
         writer = csv.writer(response)
