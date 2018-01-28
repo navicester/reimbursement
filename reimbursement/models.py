@@ -129,17 +129,17 @@ pre_save.connect(total_amount_saved, sender=Invoice)
 
 class ReimbusementRequest(models.Model):
 
-    reimbursement_status_option = [
-        ('inprogress', _('in progress')),
-        ('approved', _('approved')),
-        ('rejected', _('rejected')),        
-    ] 
-
     # reimbursement_status_option = [
-    #     ('inprogress','处理中'),
-    #     ('approved', '已批准'),
-    #     ('rejected', '已拒绝'),        
+    #     ('inprogress', _('in progress')),
+    #     ('approved', _('approved')),
+    #     ('rejected', _('rejected')),        
     # ] 
+
+    reimbursement_status_option = [
+        ('inprogress',u'处理中'),
+        ('approved', u'已批准'),
+        ('rejected', u'已拒绝'),        
+    ] 
 
     # Number = models.CharField(_('reimbursement number'), max_length=30, blank=True, null=False)
     status = models.CharField(_('reimbursement status'), choices=reimbursement_status_option, max_length=30, blank=True, null=True, default="inprogress")
@@ -187,17 +187,17 @@ class ApprovalChain(models.Model):
 
 class ApprovalRecord(models.Model):
 
-    reimbursement_status_option = [
-        ('inprogress', _('in progress')),
-        ('approved', _('approved')),
-        ('rejected', _('rejected')),        
-    ] 
-
     # reimbursement_status_option = [
-    #     ('inprogress','处理中'),
-    #     ('approved', '已批准'),
-    #     ('rejected', '已拒绝'),        
+    #     ('inprogress', _('in progress')),
+    #     ('approved', _('approved')),
+    #     ('rejected', _('rejected')),        
     # ] 
+
+    reimbursement_status_option = [
+        ('inprogress',u'处理中'),
+        ('approved', u'已批准'),
+        ('rejected', u'已拒绝'),        
+    ] 
 
     approver = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('approver'),blank=False, null=False)    
     status = models.CharField(_('reimbursement status'), choices=reimbursement_status_option, max_length=30, blank=True, null=True, default="inprogress")
