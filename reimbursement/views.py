@@ -261,8 +261,8 @@ class InvoiceListView(LoginRequiredMixin, ListView):
 
         qs = self.get_queryset()
 
-        fields_display = [ "currency", ]
-        fields_fk = ["reimbursement_request", "invoice_type", "invoice_category", "invoice_project", "invoice_status" ]
+        fields_display = [ "currency",  "invoice_type", "invoice_category", "invoice_project", "invoice_status" ]
+        fields_fk = ["reimbursement_request",]
         fields_datetime = ["invoice_date", ]
         excludes = ["",]
         

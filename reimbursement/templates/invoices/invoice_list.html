@@ -4,6 +4,9 @@
 {% load staticfiles %}
 {% load pagination_tags %}
 
+<style type="text/css">
+
+</style>
 {% block tpl_content %}
 
 <div class="page">    
@@ -34,9 +37,11 @@
     </div> -->
     <div class="page__bd page__bd_spacing" style="padding-left: 5px;">
         <div class="button-sp-area">
-            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary">下载</a>
+            <form id="export" method="POST" action="">{% csrf_token %}
+            <a href="javascript:;" onclick="document.getElementById('export').submit();" style="float:left; padding-right: 10px; margin-right: 5px;" class="weui-btn weui-btn_mini weui-btn_primary">下载</a>
+            </form>
             <a href="{% url 'invoice_list_notsubmitted' %}" class="weui-btn weui-btn_mini weui-btn_default">未提交</a>
-            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn">返回</a>
+            <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_warn" style="margin-top:0px;">返回</a>
         </div>
     </div>
     <div class="page__ft">
