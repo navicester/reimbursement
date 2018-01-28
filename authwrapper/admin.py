@@ -6,7 +6,7 @@ from .models import MyUser, WechatUserProfile
 from .forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
-from inspection.admin import my_admin_site
+# from inspection.admin import my_admin_site
 
 
 #refer to django/contrib/auth/admin.py
@@ -65,4 +65,4 @@ admin.site.register(MyUser, UserAdmin)
 admin.site.register(WechatUserProfile, WechatUserProfileAdmin)
 
 
-my_admin_site.register(MyUser, UserAdmin)
+# my_admin_site.register(MyUser, UserAdmin)

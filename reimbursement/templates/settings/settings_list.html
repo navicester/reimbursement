@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load myform %}
+
+
+{% block tpl_content %}
+
+<div class="page">    
+
+    <div class="weui-cells__title">个人设置</div>
+    <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-pencil" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:red;"></i><!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"> --></div>
+
+            <div class="weui-cell__bd">
+                <p>个人资料修改</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-female" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:green;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>密码修改</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>    
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-inbox" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:blue;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>意见反馈</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>     
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-meh-o" aria-hidden="true" style="width:20px;margin-right:5px;display:block;color:purple;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>邀请新用户</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>    
+        <a class="weui-cell weui-cell_access" href="{% url 'logout' %}">
+            <div class="weui-cell__hd"><i class="fa fa-rocket" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:pink;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>注销登录</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>                           
+    </div>
+
+    <div class="weui-cells__title">企业创建及设置</div>
+    <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-university" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:green;"></i><!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"> --></div>
+
+            <div class="weui-cell__bd">
+                <p>创建公司</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-briefcase" aria-hidden="true" style="width:20px;margin-right:5px;display:block;color: red;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>企业相关信息</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>    
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-user" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:blue;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>部门与用户角色</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>     
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-check-circle" aria-hidden="true" style="width:20px;margin-right:5px;display:block;color:orange;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>审批流设置</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>    
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-book" aria-hidden="true" style="width:20px;margin-right:5px;display:block;color:purple;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>报销类别设置</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-envelope" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color:pink;"></i></div>
+
+            <div class="weui-cell__bd">
+                <p>项目设置</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>         
+    </div>
+
+    <div class="weui-cells__title">出差申请</div>
+    <div class="weui-cells">
+        <a class="weui-cell weui-cell_access" href="javascript:;">
+            <div class="weui-cell__hd"><i class="fa fa-bus" aria-hidden="true" style="width:20px;margin-right:5px;display:block; color: green;"></i><!-- <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:20px;margin-right:5px;display:block"> --></div>
+
+            <div class="weui-cell__bd">
+                <p>出差申请</p>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </a>       
+    </div>  
+</div>
+{% endblock %}

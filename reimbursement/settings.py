@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'registration',
     'pagination',
+    'authwrapper',
+    'phone_login',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -159,3 +161,15 @@ if not 'SERVER_SOFTWARE' in os.environ:
 else:
     APP_ID = 'wx168434ba37e8c17b' #
     APP_SECRET = 'd4624c36b6795d1d99dcf0547af5443d'
+
+AUTH_USER_MODEL = 'authwrapper.MyUser'
+
+AUTHENTICATION_BACKENDS = (        
+    'authwrapper.backends.auth.MyBackend', 
+    'authwrapper.backends.auth.WechatBackend',
+    'django.contrib.auth.backends.ModelBackend',     
+    )
+AUTH_USER_MODEL = 'authwrapper.MyUser'
+ACCOUNT_ALLOW_MIX_TYPE_LOGIN = True
+
+ACCOUNT_REGISTER_TYPE =  'mail' #phone, 'mail',

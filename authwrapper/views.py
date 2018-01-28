@@ -9,7 +9,7 @@ from django.contrib import auth
 from django.views.generic.edit import FormView, UpdateView
 from django.views.decorators.csrf import csrf_exempt
 from forms import UserUpdateForm
-from zakkabag.settings import APP_ID, APP_SECRET
+from django.conf import settings
 from weixin.client import WeixinMpAPI
 #from weixin.oauth2 import OAuth2AuthExchangeError
 from phone_login.models import PhoneToken
@@ -38,8 +38,8 @@ def login(request):
         code = request.GET.get('code')
         if code:
             redirect_to = "http://%s%s" % (request.META['HTTP_HOST'], reverse("home", kwargs={})) # redirection URL after authenticate
-            api = WeixinMpAPI(appid=APP_ID, 
-                        app_secret=APP_SECRET,
+            api = WeixinMpAPI(appid=settings.APP_ID, 
+                        app_secret=settings.APP_SECRET,
                         redirect_uri=redirect_to)
             auth_info = api.exchange_code_for_access_token(code=code)
             api = WeixinMpAPI(access_token=auth_info['access_token'])

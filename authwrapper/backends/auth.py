@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
 from django.contrib import auth
-from zakkabag.settings import APP_ID, APP_SECRET
+# from zakkabag.settings import APP_ID, APP_SECRET
 #from django.core.exceptions import ObjectDoesNotExist
 
 from authwrapper.models import MyUser, WechatUserProfile

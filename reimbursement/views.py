@@ -54,7 +54,7 @@ def decodeTrainInvoice():
     file = Image.open(path)
     print pytesseract.image_to_string(file,lang='chi_sim')
     
-def home(request):
+def OCRIdentify(request):
 
     context = {}
     #context['form'] = model_forms.modelform_factory(InvoiceImage,fields = ['image'])
@@ -373,4 +373,4 @@ def imgge_ajax_upload(request):
     return render(request,'test_image_ajax_upload.html',{'form':InvoiceImageForm})
 
 def company(request):
-    return render(request,'company/company.html',{})    
+    return render(request,'settings/settings_list.html',{})    

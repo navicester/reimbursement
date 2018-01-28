@@ -20,7 +20,7 @@ from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
 from reimbursement.views import (
-    home, 
+    OCRIdentify, 
     company, 
     imgge_ajax_upload,
     
@@ -43,9 +43,9 @@ urlpatterns = [
     url(r'^wechat/', include('wechat.urls')),
 
     url(r'^admin/', admin.site.urls),
-    url(r'^home', home, name="home"),
+    url(r'^ocr', OCRIdentify, name="ocr"),
     url(r'^test',imgge_ajax_upload,name='test'),
-    url(r'^$', home, name="home"),
+    url(r'^$', InvoiceListView.as_view(), name="home"),
     url(r'^invoices$', InvoiceListView.as_view(), name='invoice_list'),
     url(r'^invoices/notsubmitted$', InvoiceNotSubmittedListView.as_view(), name='invoice_list_notsubmitted'),    
     url(r'^invoices/(?P<pk>\d+)$', InvoiceDetailView.as_view(), name='invoice_detail'),
@@ -57,6 +57,7 @@ urlpatterns = [
     url(r'^applications/fromme/$', ApplicationFromMeListView.as_view(), name='application_from_me_list'),
     url(r'^applications/tome/$', ApplicationToMeListView.as_view(), name='application_to_me_list'),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^auth/', include('authwrapper.urls')),
     url(r'^company/', company, name="company"),
 ]
 
