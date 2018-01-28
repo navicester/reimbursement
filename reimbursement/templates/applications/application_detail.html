@@ -3,7 +3,7 @@
 {% load myform %}
 
 {% block tpl_content %}
-<div class="page" style="padding-top: 9px;">
+<div class="page" style="padding-top: 7px;">
     <form id="form_approve" class="form-horizontal" enctype="multipart/form-data" method="post" action='' >{% csrf_token %}
         <div class="page__hd">
             <h1 class="page__title title_header"><small>查看发票详情&nbsp;</small></h1>
@@ -19,7 +19,7 @@
                 <div class="weui-form-preview__bd">
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">发票种类</label>
-                        <span class="weui-form-preview__value">{{invoice.invoice_type}}</span>
+                        <span class="weui-form-preview__value">{{invoice|my_get_field_display:'invoice_type'}}</span>
                     </div>
                     <div class="weui-form-preview__item">
                         <label class="weui-form-preview__label">发票日期</label>
