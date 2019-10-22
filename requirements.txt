@@ -7,7 +7,7 @@ django-registration-redux==1.4
 gunicorn==19.4.5
 idna==2.6
 olefile==0.44
-Pillow==4.3.0
+Pillow==6.2.0
 pytesseract==0.1.7
 requests==2.18.4
 six==1.11.0
